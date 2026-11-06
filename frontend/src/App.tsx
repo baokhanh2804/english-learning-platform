@@ -17,91 +17,148 @@ import {
 } from './api/client';
 import './App.css';
 
-// Rich fallback vocabulary dataset with audio IPA & examples
+// Rich expanded vocabulary dataset with Free Unsplash Photos & Curated Categories
 const INITIAL_VOCABULARY: VocabularyItem[] = [
+  // 1. Giao tiếp hàng ngày (Daily Life)
   {
     id: 1,
     word: 'Hello',
     ipa: '/həˈloʊ/',
     part_of_speech: 'interjection',
+    topic: 'daily',
+    image_url: 'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=500&auto=format&fit=crop&q=80',
     meanings: [{ meaning: 'Xin chào (lời chào trang trọng và thân thiện)' }],
-    examples: [{ sentence: 'Hello, nice to meet you!', translation: 'Xin chào, rất vui được gặp bạn!' }]
+    examples: [{ sentence: 'Hello, nice to meet you today!', translation: 'Xin chào, rất vui được gặp bạn hôm nay!' }]
   },
   {
     id: 2,
     word: 'Welcome',
     ipa: '/ˈwel.kəm/',
     part_of_speech: 'exclamation',
+    topic: 'daily',
+    image_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=500&auto=format&fit=crop&q=80',
     meanings: [{ meaning: 'Chào mừng / Hoan nghênh nhiệt liệt' }],
-    examples: [{ sentence: 'Welcome to our vocabulary learning journey!', translation: 'Chào mừng bạn đến với hành trình học từ vựng!' }]
+    examples: [{ sentence: 'Welcome to our friendly learning community!', translation: 'Chào mừng bạn đến với cộng đồng học tập thân thiện!' }]
   },
   {
     id: 3,
     word: 'Gratitude',
     ipa: '/ˈɡræt̬.ə.tuːd/',
     part_of_speech: 'noun',
+    topic: 'daily',
+    image_url: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=500&auto=format&fit=crop&q=80',
     meanings: [{ meaning: 'Lòng biết ơn, sự cảm kích sâu sắc' }],
-    examples: [{ sentence: 'Expressing gratitude improves happiness.', translation: 'Bày tỏ lòng biết ơn giúp nâng cao hạnh phúc.' }]
+    examples: [{ sentence: 'Expressing gratitude brings happiness into your life.', translation: 'Bày tỏ lòng biết ơn mang lại hạnh phúc cho cuộc sống của bạn.' }]
   },
   {
     id: 4,
-    word: 'Opportunity',
-    ipa: '/ˌɑː.pɚˈtuː.nə.t̬i/',
-    part_of_speech: 'noun',
-    meanings: [{ meaning: 'Cơ hội, thời cơ thuận lợi để phát triển' }],
-    examples: [{ sentence: 'Every challenge is an opportunity to learn.', translation: 'Mỗi thử thách là một cơ hội để học hỏi.' }]
-  },
-  {
-    id: 5,
-    word: 'Perseverance',
-    ipa: '/ˌpɝː.səˈvɪr.əns/',
-    part_of_speech: 'noun',
-    meanings: [{ meaning: 'Sự kiên trì, bền bỉ vượt qua khó khăn' }],
-    examples: [{ sentence: 'Perseverance is the key to mastering English.', translation: 'Sự kiên trì là chìa khóa để tinh thông tiếng Anh.' }]
-  },
-  {
-    id: 6,
-    word: 'Resilient',
-    ipa: '/rɪˈzɪl.jənt/',
-    part_of_speech: 'adjective',
-    meanings: [{ meaning: 'Kiên cường, có khả năng phục hồi nhanh' }],
-    examples: [{ sentence: 'She remained resilient in the face of difficulties.', translation: 'Cô ấy luôn kiên cường trước mọi khó khăn.' }]
-  },
-  {
-    id: 7,
     word: 'Curiosity',
     ipa: '/ˌkjʊr.iˈɑː.sə.t̬i/',
     part_of_speech: 'noun',
+    topic: 'daily',
+    image_url: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&auto=format&fit=crop&q=80',
     meanings: [{ meaning: 'Lòng hiếu kỳ, niềm khao khát học hỏi điều mới' }],
-    examples: [{ sentence: 'Curiosity fuels creativity and intelligence.', translation: 'Sự tò mò nuôi dưỡng sáng tạo và trí tuệ.' }]
+    examples: [{ sentence: 'Curiosity fuels creativity and rapid personal growth.', translation: 'Sự tò mò nuôi dưỡng sáng tạo và sự phát triển cá nhân nhanh chóng.' }]
+  },
+
+  // 2. Du lịch & Sân bay (Travel & Hospitality)
+  {
+    id: 5,
+    word: 'Passport',
+    ipa: '/ˈpæs.pɔːrt/',
+    part_of_speech: 'noun',
+    topic: 'travel',
+    image_url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Hộ chiếu (giấy thông hành quốc tế)' }],
+    examples: [{ sentence: 'Please have your passport and ticket ready for boarding.', translation: 'Vui lòng chuẩn bị sẵn hộ chiếu và vé để lên máy bay.' }]
   },
   {
+    id: 6,
+    word: 'Journey',
+    ipa: '/ˈdʒɝː.ni/',
+    part_of_speech: 'noun',
+    topic: 'travel',
+    image_url: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Hành trình, chuyến đi khám phá' }],
+    examples: [{ sentence: 'A journey of a thousand miles begins with a single step.', translation: 'Hành trình vạn dặm bắt đầu từ một bước chân.' }]
+  },
+  {
+    id: 7,
+    word: 'Destination',
+    ipa: '/ˌdes.təˈneɪ.ʃən/',
+    part_of_speech: 'noun',
+    topic: 'travel',
+    image_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Điểm đến, đích đến của chuyến đi' }],
+    examples: [{ sentence: 'Da Nang is a popular travel destination in Vietnam.', translation: 'Đà Nẵng là một điểm đến du lịch nổi tiếng ở Việt Nam.' }]
+  },
+
+  // 3. Công sở & Nghề nghiệp (Business & Career)
+  {
     id: 8,
-    word: 'Accomplish',
-    ipa: '/əˈkɑːm.plɪʃ/',
-    part_of_speech: 'verb',
-    meanings: [{ meaning: 'Hoàn thành xuất sắc, đạt được mục tiêu' }],
-    examples: [{ sentence: 'You can accomplish anything with consistent practice.', translation: 'Bạn có thể đạt được mọi thứ nếu kiên trì luyện tập.' }]
+    word: 'Opportunity',
+    ipa: '/ˌɑː.pɚˈtuː.nə.t̬i/',
+    part_of_speech: 'noun',
+    topic: 'business',
+    image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Cơ hội, thời cơ thuận lợi để phát triển' }],
+    examples: [{ sentence: 'English opens doors to countless career opportunities.', translation: 'Tiếng Anh mở ra cánh cửa dẫn đến vô số cơ hội nghề nghiệp.' }]
   },
   {
     id: 9,
-    word: 'Eloquent',
-    ipa: '/ˈel.ə.kwənt/',
-    part_of_speech: 'adjective',
-    meanings: [{ meaning: 'Hùng biện, diễn đạt lưu loát và truyền cảm' }],
-    examples: [{ sentence: 'He gave an eloquent speech at the conference.', translation: 'Anh ấy đã có một bài phát biểu hùng biện tại hội nghị.' }]
+    word: 'Perseverance',
+    ipa: '/ˌpɝː.səˈvɪr.əns/',
+    part_of_speech: 'noun',
+    topic: 'business',
+    image_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Sự kiên trì, bền bỉ vượt qua khó khăn' }],
+    examples: [{ sentence: 'Perseverance and discipline guarantee long-term success.', translation: 'Sự kiên trì và kỷ luật đảm bảo thành công lâu dài.' }]
   },
   {
     id: 10,
+    word: 'Accomplish',
+    ipa: '/əˈkɑːm.plɪʃ/',
+    part_of_speech: 'verb',
+    topic: 'business',
+    image_url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Hoàn thành xuất sắc, đạt được mục tiêu' }],
+    examples: [{ sentence: 'We can accomplish our goals if we work together effectively.', translation: 'Chúng ta có thể hoàn thành mục tiêu nếu hợp tác hiệu quả.' }]
+  },
+
+  // 4. Luyện thi TOEIC / IELTS (Academic)
+  {
+    id: 11,
+    word: 'Resilient',
+    ipa: '/rɪˈzɪl.jənt/',
+    part_of_speech: 'adjective',
+    topic: 'academic',
+    image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Kiên cường, có khả năng phục hồi nhanh' }],
+    examples: [{ sentence: 'A resilient mindset helps you overcome setbacks easily.', translation: 'Tư duy kiên cường giúp bạn vượt qua thất bại một cách dễ dàng.' }]
+  },
+  {
+    id: 12,
+    word: 'Eloquent',
+    ipa: '/ˈel.ə.kwənt/',
+    part_of_speech: 'adjective',
+    topic: 'academic',
+    image_url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=500&auto=format&fit=crop&q=80',
+    meanings: [{ meaning: 'Hùng biện, diễn đạt lưu loát và truyền cảm' }],
+    examples: [{ sentence: 'She delivered an eloquent presentation at the university conference.', translation: 'Cô ấy đã trình bày một bài thuyết trình hùng biện tại hội thảo đại học.' }]
+  },
+  {
+    id: 13,
     word: 'Serendipity',
     ipa: '/ˌser.ənˈdɪp.ə.t̬i/',
     part_of_speech: 'noun',
+    topic: 'academic',
+    image_url: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=500&auto=format&fit=crop&q=80',
     meanings: [{ meaning: 'Sự may mắn tình cờ, duyên may bất ngờ' }],
-    examples: [{ sentence: 'Finding this app was pure serendipity.', translation: 'Tìm thấy ứng dụng này thực sự là một duyên may bất ngờ.' }]
+    examples: [{ sentence: 'Meeting my best friend here was a wonderful serendipity.', translation: 'Gặp được người bạn thân nhất ở đây là một duyên may tuyệt vời.' }]
   }
 ];
 
-// Roadmap Milestones (Duolingo Style Progression)
+// Roadmap Milestones
 interface RoadmapMilestone {
   id: number;
   level: string;
@@ -120,7 +177,7 @@ const ROADMAP_MILESTONES: RoadmapMilestone[] = [
   { id: 6, level: 'C1-C2', title: 'Bậc thầy Tinh thông', description: 'Hiểu sâu tài liệu học thuật và phong thái giao tiếp bản ngữ.', requiredXp: 1000, icon: '👑' },
 ];
 
-// Writing Prompts according to Roadmap Levels
+// Writing Prompts
 interface WritingPrompt {
   id: number;
   level: string;
@@ -174,6 +231,66 @@ interface SavedJournalEntry {
   matchedKeywords: string[];
   feedback: string;
   createdAt: string;
+}
+
+// AI Roleplay Scenarios
+interface RoleplayScenario {
+  id: string;
+  title: string;
+  icon: string;
+  character: string;
+  context: string;
+  initialMessage: string;
+  quickReplies: string[];
+}
+
+const AI_SCENARIOS: RoleplayScenario[] = [
+  {
+    id: 'coffee',
+    title: 'Gọi cà phê tại London',
+    icon: '☕',
+    character: 'Barista Oliver',
+    context: 'Bạn đang ở một quán cà phê tại trung tâm London và muốn gọi đồ uống.',
+    initialMessage: "Good morning! Welcome to London Roast Café. What can I get started for you today?",
+    quickReplies: [
+      "I would like an iced latte with oat milk, please.",
+      "Could I see your pastry menu as well?",
+      "Can I get a hot cappuccino to go, please?"
+    ]
+  },
+  {
+    id: 'airport',
+    title: 'Thủ tục Check-in sân bay',
+    icon: '✈️',
+    character: 'Officer Emma',
+    context: 'Bạn đang làm thủ tục tại quầy check-in sân bay quốc tế Heathrow.',
+    initialMessage: "Hello! May I see your passport and flight booking confirmation, please?",
+    quickReplies: [
+      "Here is my passport and boarding pass.",
+      "Can I request a window seat, please?",
+      "Is this carry-on bag the right size for the cabin?"
+    ]
+  },
+  {
+    id: 'interview',
+    title: 'Phỏng vấn xin việc tiếng Anh',
+    icon: '💼',
+    character: 'HR Manager David',
+    context: 'Bạn đang tham gia buổi phỏng vấn vị trí mới tại một công ty đa quốc gia.',
+    initialMessage: "Welcome to our interview! Could you please introduce yourself and share why you want to work with us?",
+    quickReplies: [
+      "Certainly! I have a strong passion for continuous learning and teamwork.",
+      "I believe my background and problem-solving skills align well with your team.",
+      "I am very excited about your company's mission and future vision."
+    ]
+  }
+];
+
+interface ChatMessage {
+  id: number;
+  sender: 'ai' | 'user';
+  text: string;
+  coachTip?: string;
 }
 
 const DEFAULT_QUIZ: Quiz = {
@@ -300,7 +417,7 @@ const playSoundEffect = (type: 'correct' | 'wrong' | 'flip' | 'win') => {
   }
 };
 
-// Web Speech API Native Text-to-Speech with customizable playback rate
+// Web Speech API Native Text-to-Speech
 const speakWord = (text: string, rate: number = 0.88) => {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -312,10 +429,10 @@ const speakWord = (text: string, rate: number = 0.88) => {
 };
 
 export default function App() {
-  // Navigation tabs: 'roadmap' | 'flashcards' | 'spell' | 'writing' | 'match' | 'quiz' | 'deck' | 'health'
-  const [activeTab, setActiveTab] = useState<'roadmap' | 'flashcards' | 'spell' | 'writing' | 'match' | 'quiz' | 'deck' | 'health'>('roadmap');
+  // Navigation tabs
+  const [activeTab, setActiveTab] = useState<'roadmap' | 'flashcards' | 'speech' | 'ai_chat' | 'spell' | 'writing' | 'match' | 'quiz' | 'deck' | 'health'>('roadmap');
 
-  // Gamification state with localStorage persistence
+  // Gamification state
   const [streak, setStreak] = useState<number>(() => {
     const saved = localStorage.getItem('user_streak');
     return saved ? parseInt(saved, 10) : 3;
@@ -334,8 +451,9 @@ export default function App() {
   const [hearts] = useState<number>(5);
   const [decayWarning, setDecayWarning] = useState<string | null>(null);
 
-  // Vocabulary dataset & filters
+  // Vocabulary dataset & topic filter
   const [vocabulary, setVocabulary] = useState<VocabularyItem[]>(INITIAL_VOCABULARY);
+  const [selectedTopic, setSelectedTopic] = useState<string>('all');
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<number>>(new Set([1, 4]));
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -344,6 +462,23 @@ export default function App() {
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [learnedCount, setLearnedCount] = useState<number>(0);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
+
+  // ELSA Speak: Speech Recognition & Pronunciation Assessment State
+  const [isListeningSpeech, setIsListeningSpeech] = useState<boolean>(false);
+  const [speechResultText, setSpeechResultText] = useState<string>('');
+  const [pronunciationScore, setPronunciationScore] = useState<{ score: number; feedback: string; endingSoundAlert?: string } | null>(null);
+
+  // AI Roleplay Chat State
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string>('coffee');
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    {
+      id: 1,
+      sender: 'ai',
+      text: AI_SCENARIOS[0].initialMessage,
+      coachTip: 'Gợi ý: Bạn có thể bắt đầu bằng lời chào và gọi một món đồ uống yêu thích.'
+    }
+  ]);
+  const [chatInput, setChatInput] = useState<string>('');
 
   // Match Minigame State
   interface MatchCardItem {
@@ -358,7 +493,7 @@ export default function App() {
   const [wrongPair, setWrongPair] = useState<string[]>([]);
   const [matchGameWon, setMatchGameWon] = useState<boolean>(false);
 
-  // Listening / Dictation Practice State (PROMPT FIX: No Vietnamese / IPA upfront!)
+  // Listening / Dictation Practice State
   const [spellInput, setSpellInput] = useState<string>('');
   const [spellFeedback, setSpellFeedback] = useState<'none' | 'correct' | 'wrong'>('none');
   const [listenSpeed, setListenSpeed] = useState<number>(0.9);
@@ -403,7 +538,10 @@ export default function App() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [authSuccess, setAuthSuccess] = useState<string | null>(null);
 
-  // Update XP helper with storage sync
+  // PWA Install State
+  const [showPwaBanner, setShowPwaBanner] = useState<boolean>(false);
+
+  // Update XP helper
   const addXp = (amount: number) => {
     setXp((prev) => {
       const next = prev + amount;
@@ -420,11 +558,11 @@ export default function App() {
     });
   };
 
-  // Check Daily Decay / XP penalty for missed days
+  // Mount logic: PWA event, Daily decay, Auth check
   useEffect(() => {
     fetchBackendHealth();
 
-    // Daily Decay check: Compare today with last active date
+    // Daily Decay check
     const lastActiveStr = localStorage.getItem('last_active_date');
     const todayStr = new Date().toISOString().slice(0, 10);
 
@@ -435,7 +573,7 @@ export default function App() {
 
       if (diffDays > 1) {
         const missedDays = diffDays - 1;
-        const penalty = missedDays * 20; // 20 XP per missed day
+        const penalty = missedDays * 20;
         deductXp(penalty);
         setStreak(0);
         localStorage.setItem('user_streak', '0');
@@ -536,9 +674,11 @@ export default function App() {
 
     addXp(earnedXp);
     setIsFlipped(false);
+    setPronunciationScore(null);
+    setSpeechResultText('');
 
     setTimeout(() => {
-      setCurrentVocabIndex((prev) => (prev + 1) % vocabulary.length);
+      setCurrentVocabIndex((prev) => (prev + 1) % filteredVocabList.length);
     }, 200);
   };
 
@@ -553,7 +693,155 @@ export default function App() {
     });
   };
 
-  // Handle Match Card click
+  // ELSA Speak: Pronunciation Assessment with Speech Recognition
+  const handleStartSpeechPractice = (targetWord: string) => {
+    const SpeechRecognitionClass = (window as unknown as { webkitSpeechRecognition?: typeof EventTarget; SpeechRecognition?: typeof EventTarget }).webkitSpeechRecognition || (window as unknown as { SpeechRecognition?: typeof EventTarget }).SpeechRecognition;
+
+    if (!SpeechRecognitionClass) {
+      alert('Trình duyệt hiện tại chưa hỗ trợ Web Speech API. Bạn nên mở trang trên Google Chrome hoặc Microsoft Edge để luyện nói nhé!');
+      return;
+    }
+
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const recognition = new (SpeechRecognitionClass as any)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      setIsListeningSpeech(true);
+      setPronunciationScore(null);
+      setSpeechResultText('Đang lắng nghe giọng bạn nói...');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      recognition.onresult = (event: any) => {
+        const spoken = event.results[0][0].transcript;
+        setSpeechResultText(`Bạn vừa đọc: "${spoken}"`);
+
+        // Calculate score
+        const cleanTarget = targetWord.trim().toLowerCase();
+        const cleanSpoken = spoken.trim().toLowerCase();
+
+        const endingChars = ['s', 't', 'd', 'k', 'p'];
+        const lastTarget = cleanTarget[cleanTarget.length - 1];
+        const lastSpoken = cleanSpoken[cleanSpoken.length - 1];
+        let endingAlert: string | undefined;
+
+        if (endingChars.includes(lastTarget) && lastSpoken !== lastTarget) {
+          endingAlert = `Lưu ý âm đuôi: Hãy nhấn rõ âm đuôi /${lastTarget}/ hơn nhé!`;
+        }
+
+        if (cleanSpoken.includes(cleanTarget) || cleanTarget === cleanSpoken) {
+          setPronunciationScore({
+            score: 95,
+            feedback: 'Tuyệt vời! Bạn phát âm rất chuẩn xác người bản ngữ! ⭐⭐⭐',
+            endingSoundAlert: endingAlert
+          });
+          playSoundEffect('win');
+          addXp(25);
+        } else {
+          // Similarity estimate
+          let matches = 0;
+          for (let i = 0; i < Math.min(cleanTarget.length, cleanSpoken.length); i++) {
+            if (cleanTarget[i] === cleanSpoken[i]) matches++;
+          }
+          const score = Math.max(45, Math.round((matches / cleanTarget.length) * 100));
+
+          if (score >= 70) {
+            setPronunciationScore({
+              score,
+              feedback: 'Khá tốt! Hãy nghe lại phát âm mẫu và thử lại để hoàn thiện hơn.',
+              endingSoundAlert: endingAlert
+            });
+            playSoundEffect('correct');
+            addXp(10);
+          } else {
+            setPronunciationScore({
+              score,
+              feedback: 'Chưa chính xác! Bấm loa nghe lại rồi nhấn Micro đọc lại nhé.',
+              endingSoundAlert: endingAlert
+            });
+            playSoundEffect('wrong');
+          }
+        }
+      };
+
+      recognition.onerror = () => {
+        setIsListeningSpeech(false);
+        setSpeechResultText('Không bắt được giọng nói. Vui lòng bấm Micro và nói to rõ hơn nhé.');
+      };
+
+      recognition.onend = () => {
+        setIsListeningSpeech(false);
+      };
+
+      recognition.start();
+    } catch {
+      setIsListeningSpeech(false);
+    }
+  };
+
+  // AI Roleplay Chat: Send message & simulated tutor coaching
+  const activeScenario = AI_SCENARIOS.find((s) => s.id === selectedScenarioId) || AI_SCENARIOS[0];
+
+  const handleSendAiChatMessage = (textToSend?: string) => {
+    const message = (textToSend || chatInput).trim();
+    if (!message) return;
+
+    const userMsg: ChatMessage = {
+      id: Date.now(),
+      sender: 'user',
+      text: message
+    };
+
+    const updated = [...chatMessages, userMsg];
+    setChatMessages(updated);
+    setChatInput('');
+    playSoundEffect('flip');
+    addXp(15);
+
+    // AI Response Simulation with Audio & Coaching
+    setTimeout(() => {
+      let replyText = "That sounds wonderful! Is there anything else I can assist you with?";
+      let tip = "✅ Câu trả lời rất tự nhiên, từ vựng chuẩn ngữ cảnh!";
+
+      if (selectedScenarioId === 'coffee') {
+        replyText = "Perfect choice! That will be £3.80. Would you like anything to eat with your coffee today?";
+        tip = "💡 Mẹo bản ngữ: Người Anh thường nói 'Can I have...' hoặc 'Could I get...' khi gọi món lịch sự.";
+      } else if (selectedScenarioId === 'airport') {
+        replyText = "Thank you. Your documents look great. I have assigned you seat 14A by the window. Have a great flight!";
+        tip = "💡 Tuyệt vời: Bạn đã sử dụng chính xác các thuật ngữ 'boarding pass' và 'window seat'.";
+      } else if (selectedScenarioId === 'interview') {
+        replyText = "Thank you for sharing. How do you handle stressful situations and tight deadlines?";
+        tip = "💡 Gợi ý: Hãy dùng cấu trúc STAR (Situation, Task, Action, Result) khi trả lời câu hỏi phỏng vấn.";
+      }
+
+      const aiMsg: ChatMessage = {
+        id: Date.now() + 1,
+        sender: 'ai',
+        text: replyText,
+        coachTip: tip
+      };
+
+      setChatMessages([...updated, aiMsg]);
+      speakWord(replyText, 0.9);
+      playSoundEffect('correct');
+    }, 900);
+  };
+
+  const handleSelectScenario = (scenario: RoleplayScenario) => {
+    setSelectedScenarioId(scenario.id);
+    setChatMessages([
+      {
+        id: Date.now(),
+        sender: 'ai',
+        text: scenario.initialMessage,
+        coachTip: `Bối cảnh: ${scenario.context}`
+      }
+    ]);
+  };
+
+  // Match Game Handler
   const handleMatchCardClick = (card: MatchCardItem) => {
     if (matchedIds.has(card.id) || selectedCards.some((c) => c.id === card.id) || selectedCards.length >= 2) {
       return;
@@ -602,7 +890,7 @@ export default function App() {
     }
   };
 
-  // Simulate Missed Day Penalty (Requested by User)
+  // Simulate Missed Day Penalty
   const handleSimulateMissedDay = () => {
     const penalty = 20;
     deductXp(penalty);
@@ -612,9 +900,20 @@ export default function App() {
     playSoundEffect('wrong');
   };
 
-  // Listening / Dictation Practice (PROMPT FIX: ONLY Audio, NO English/Vietnamese upfront)
-  const currentVocab = vocabulary[currentVocabIndex] || vocabulary[0];
+  // Filtered Vocab by topic
+  const filteredVocabList = useMemo(() => {
+    return vocabulary.filter((v) => {
+      const matchTopic = selectedTopic === 'all' || v.topic === selectedTopic;
+      const matchSearch =
+        v.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        v.meanings.some((m) => m.meaning.toLowerCase().includes(searchTerm.toLowerCase()));
+      return matchTopic && matchSearch;
+    });
+  }, [vocabulary, selectedTopic, searchTerm]);
 
+  const currentVocab = filteredVocabList[currentVocabIndex] || vocabulary[0];
+
+  // Listening / Dictation Practice
   const handleSpellCheck = () => {
     if (!currentVocab) return;
 
@@ -637,10 +936,10 @@ export default function App() {
     setSpellInput('');
     setSpellFeedback('none');
     setShowListenHint(false);
-    setCurrentVocabIndex((prev) => (prev + 1) % vocabulary.length);
+    setCurrentVocabIndex((prev) => (prev + 1) % filteredVocabList.length);
   };
 
-  // Writing & Journaling Logic
+  // Writing & Journaling Logic with AI Grammar Feedback
   const activePrompt = WRITING_PROMPTS.find((p) => p.id === selectedPromptId) || WRITING_PROMPTS[0];
 
   const journalWordCount = useMemo(() => {
@@ -669,7 +968,11 @@ export default function App() {
       return next;
     });
 
-    const feedback = `Xuất sắc! Bạn đã viết được ${journalWordCount} từ và ứng dụng thành công ${matchedKeywords.length}/${activePrompt.targetKeywords.length} từ vựng mục tiêu. Nhận ngay +${earnedXp} XP và +${earnedGems} 💎!`;
+    const aiGrammarAdvice = journalWordCount >= 40
+      ? "Ngữ pháp xuất sắc! Độ dài bài viết đạt chuẩn B1. Đề xuất dùng thêm liên từ 'Moreover' và 'Consequently' để bài viết học thuật hơn."
+      : "Ngữ pháp rất tốt, cấu trúc câu mạch lạc. Bạn đã ứng dụng từ vựng đúng ngữ cảnh!";
+
+    const feedback = `Xuất sắc! Bạn đã viết được ${journalWordCount} từ và ứng dụng thành công ${matchedKeywords.length}/${activePrompt.targetKeywords.length} từ vựng mục tiêu. ${aiGrammarAdvice} Nhận ngay +${earnedXp} XP và +${earnedGems} 💎!`;
     setJournalFeedback(feedback);
     playSoundEffect('win');
 
@@ -689,17 +992,7 @@ export default function App() {
     localStorage.setItem('user_journal_entries', JSON.stringify(updatedEntries));
   };
 
-  // Filtered vocabulary for dictionary deck
-  const filteredVocabulary = useMemo(() => {
-    return vocabulary.filter((v) => {
-      const matchSearch =
-        v.word.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        v.meanings.some((m) => m.meaning.toLowerCase().includes(searchTerm.toLowerCase()));
-      return matchSearch;
-    });
-  }, [vocabulary, searchTerm]);
-
-  // Part of speech badge color helper
+  // Helper for part of speech colors
   const getPosBadgeColor = (pos: string) => {
     switch (pos.toLowerCase()) {
       case 'noun': return 'bg-primary text-white';
@@ -772,7 +1065,7 @@ export default function App() {
                 Vocab<span style={{ color: '#10b981' }}>Master</span>
               </div>
               <small className="text-muted d-none d-sm-inline" style={{ fontSize: '0.75rem' }}>
-                Lộ trình học & Kỷ luật thông minh
+                CEFR Lộ Trình • ELSA Nói • AI Tutor
               </small>
             </div>
           </div>
@@ -798,6 +1091,17 @@ export default function App() {
               <span>❤️</span>
               <span>{hearts}</span>
             </div>
+
+            {/* PWA Install Button */}
+            <button
+              className="btn btn-sm btn-outline-success rounded-pill px-2 py-1 text-nowrap d-none d-sm-inline-flex align-items-center gap-1"
+              onClick={() => setShowPwaBanner(true)}
+              style={{ fontSize: '0.75rem', fontWeight: 700 }}
+              title="Cài đặt App lên màn hình chính điện thoại iOS / Android"
+            >
+              <span>📲</span>
+              <span>Cài App</span>
+            </button>
 
             {/* Test Simulation Button: Simulate missed day & decay */}
             <button
@@ -845,6 +1149,48 @@ export default function App() {
         </div>
       </header>
 
+      {/* PWA Installation Instructions Modal */}
+      {showPwaBanner && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+          style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(6px)', zIndex: 9999 }}
+          onClick={() => setShowPwaBanner(false)}
+        >
+          <div
+            className="card border-0 rounded-4 shadow-lg p-4 bg-white"
+            style={{ maxWidth: '440px', width: '100%' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center mb-3">
+              <span style={{ fontSize: '3rem' }}>📲</span>
+              <h4 className="fw-bolder mt-2 mb-1">Cài đặt VocabMaster lên Điện Thoại</h4>
+              <p className="text-muted small">Dùng như một ứng dụng gốc (App Store / CH Play) với tốc độ tức thì và học ngoại tuyến!</p>
+            </div>
+
+            <div className="bg-light p-3 rounded-4 mb-3 small text-start">
+              <div className="fw-bold mb-2 text-dark">📱 Đối với iPhone / iPad (Safari):</div>
+              <ol className="mb-0 ps-3">
+                <li>Bấm vào biểu tượng <strong>Chia sẻ (Share) 📤</strong> ở thanh công cụ dưới cùng Safari.</li>
+                <li>Cuộn xuống và chọn <strong>"Thêm vào Màn hình chính" (Add to Home Screen) ➕</strong>.</li>
+                <li>Bấm <strong>"Thêm" (Add)</strong> ở góc trên bên phải.</li>
+              </ol>
+
+              <hr />
+
+              <div className="fw-bold mb-2 text-dark">🤖 Đối với Android (Chrome):</div>
+              <ol className="mb-0 ps-3">
+                <li>Bấm vào biểu tượng <strong>3 chấm dọc ⋮</strong> ở góc trên bên phải Chrome.</li>
+                <li>Chọn <strong>"Cài đặt ứng dụng"</strong> hoặc <strong>"Thêm vào Màn hình chính"</strong>.</li>
+              </ol>
+            </div>
+
+            <button className="btn btn-duo btn-duo-green w-100 py-2" onClick={() => setShowPwaBanner(false)}>
+              Đã hiểu, đóng hướng dẫn 👍
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Daily Decay / Missed Day Alert Banner */}
       {decayWarning && (
         <div className="app-container pt-3">
@@ -874,14 +1220,28 @@ export default function App() {
               className={`app-nav-pill ${activeTab === 'roadmap' ? 'active' : ''}`}
               onClick={() => setActiveTab('roadmap')}
             >
-              <span>🗺️</span> Lộ Trình (Roadmap)
+              <span>🗺️</span> Lộ Trình
             </button>
 
             <button
               className={`app-nav-pill ${activeTab === 'flashcards' ? 'active' : ''}`}
               onClick={() => setActiveTab('flashcards')}
             >
-              <span>🗂️</span> Thẻ Flashcards
+              <span>🗂️</span> Thẻ 3D Có Ảnh
+            </button>
+
+            <button
+              className={`app-nav-pill ${activeTab === 'speech' ? 'active' : ''}`}
+              onClick={() => setActiveTab('speech')}
+            >
+              <span>🎙️</span> Luyện Nói (ELSA)
+            </button>
+
+            <button
+              className={`app-nav-pill ${activeTab === 'ai_chat' ? 'active' : ''}`}
+              onClick={() => setActiveTab('ai_chat')}
+            >
+              <span>🤖</span> Trợ Lý AI Chat
             </button>
 
             <button
@@ -902,21 +1262,21 @@ export default function App() {
               className={`app-nav-pill ${activeTab === 'match' ? 'active' : ''}`}
               onClick={() => setActiveTab('match')}
             >
-              <span>🎮</span> Ghép Từ Nhanh
+              <span>🎮</span> Ghép Từ
             </button>
 
             <button
               className={`app-nav-pill ${activeTab === 'quiz' ? 'active' : ''}`}
               onClick={() => setActiveTab('quiz')}
             >
-              <span>📝</span> Trắc nghiệm Quiz
+              <span>📝</span> Trắc nghiệm
             </button>
 
             <button
               className={`app-nav-pill ${activeTab === 'deck' ? 'active' : ''}`}
               onClick={() => setActiveTab('deck')}
             >
-              <span>📚</span> Sổ Từ Vựng ({vocabulary.length})
+              <span>📚</span> Sổ Từ ({vocabulary.length})
             </button>
 
             <button
@@ -932,9 +1292,7 @@ export default function App() {
       {/* 3. MAIN APP CONTENT AREA */}
       <main className="app-container py-4 flex-grow-1">
 
-        {/* ============================================================ */}
-        {/* BỨC TƯỜNG BẢO VỆ: CHẶN NGƯỜI NGOÀI NẾU CHƯA ĐĂNG NHẬP      */}
-        {/* ============================================================ */}
+        {/* BỨC TƯỜNG BẢO VỆ: CHẶN NGƯỜI NGOÀI NẾU CHƯA ĐĂNG NHẬP */}
         {!currentUser ? (
           <div className="mx-auto my-3 text-center" style={{ maxWidth: '640px' }}>
             <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
@@ -947,12 +1305,12 @@ export default function App() {
 
               <h2 className="fw-bolder text-dark mb-2">Chào mừng đến với VocabMaster!</h2>
               <p className="text-muted mb-4 fs-6">
-                Hệ thống học tiếng Anh thông minh theo chuẩn CEFR (A1–C2) với thuật toán ghi nhớ SRS, luyện nghe chính tả và viết nhật ký.
+                Học từ vựng thông minh CEFR (A1–C2), luyện phát âm chuẩn ELSA Speak, trợ lý AI đối thoại nhập vai và rèn luyện kỷ luật trừ điểm khi không online.
                 <br />
-                <strong className="text-danger">Tất cả bài học và lộ trình đều được bảo mật — Vui lòng đăng nhập để tiếp tục.</strong>
+                <strong className="text-danger">Toàn bộ bài học đều được bảo mật — Vui lòng đăng nhập để bắt đầu!</strong>
               </p>
 
-              {/* Form Đăng nhập / Đăng ký Trực Tiếp Ngay Tại Trang Chủ */}
+              {/* Form Đăng nhập & Đăng ký Ngay Trang Chủ */}
               <div className="card bg-light border-0 rounded-4 p-4 text-start mb-4 shadow-sm">
                 <div className="d-flex rounded-pill bg-white p-1 mb-3 border">
                   <button
@@ -1043,33 +1401,33 @@ export default function App() {
               <div className="row g-3 text-start">
                 <div className="col-12 col-md-6">
                   <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
+                    <div className="fs-4 mb-1">🎙️</div>
+                    <strong className="d-block mb-1 text-dark">Luyện nói AI (Giống ELSA)</strong>
+                    <small className="text-muted">Bấm micro tự đọc từ vựng, chấm điểm % độ chuẩn và nhận diện âm đuôi.</small>
+                  </div>
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
+                    <div className="fs-4 mb-1">🤖</div>
+                    <strong className="d-block mb-1 text-dark">Trợ lý AI Đàm Thoại</strong>
+                    <small className="text-muted">Chat nhập vai tại quán cà phê, sân bay và phỏng vấn việc làm kèm audio bản ngữ.</small>
+                  </div>
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
                     <div className="fs-4 mb-1">🗺️</div>
-                    <strong className="d-block mb-1 text-dark">Lộ trình CEFR A1 - C2</strong>
-                    <small className="text-muted">Mở khóa từng mốc kiến thức, đo lường sự tiến bộ qua XP và các ngôi sao.</small>
+                    <strong className="d-block mb-1 text-dark">Bản đồ Lộ trình CEFR</strong>
+                    <small className="text-muted">Mở khóa cấp độ A1 ➜ C2 theo từng mốc kỹ năng, hình ảnh trực quan 100% miễn phí.</small>
                   </div>
                 </div>
 
                 <div className="col-12 col-md-6">
                   <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">🗂️</div>
-                    <strong className="d-block mb-1 text-dark">Thẻ SRS 3D & Luyện nghe</strong>
-                    <small className="text-muted">Ghi nhớ từ vựng sâu, luyện nghe chính tả ẩn chữ với giọng đọc bản ngữ.</small>
-                  </div>
-                </div>
-
-                <div className="col-12 col-md-6">
-                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">✍️</div>
-                    <strong className="d-block mb-1 text-dark">Viết nhật ký theo lộ trình</strong>
-                    <small className="text-muted">Thực hành viết đoạn văn theo cấp độ, kiểm tra từ vựng mục tiêu tức thì.</small>
-                  </div>
-                </div>
-
-                <div className="col-12 col-md-6">
-                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">⚠️</div>
-                    <strong className="d-block mb-1 text-dark">Kỷ luật trừ điểm khi lười</strong>
-                    <small className="text-muted">Tự động trừ 20 XP khi bỏ lỡ ngày học, rèn luyện thói quen học tập bền bỉ.</small>
+                    <div className="fs-4 mb-1">📲</div>
+                    <strong className="d-block mb-1 text-dark">Cài vào Điện Thoại (PWA)</strong>
+                    <small className="text-muted">Mở trên Safari/Chrome, thêm vào màn hình chính dùng như ứng dụng App Store.</small>
                   </div>
                 </div>
               </div>
@@ -1080,618 +1438,90 @@ export default function App() {
           /* NỘI DUNG HỌC TẬP: CHỈ DÀNH CHO HỌC VIÊN ĐÃ ĐĂNG NHẬP        */
           /* ============================================================ */
           <>
-
-        {/* TAB 0: ROADMAP (CƠ CHẾ LỘ TRÌNH DUOLINGO STYLE) */}
-        {activeTab === 'roadmap' && (
-          <div className="mx-auto" style={{ maxWidth: '680px' }}>
-            <div className="text-center mb-4">
-              <span className="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-bold mb-2">
-                KHUNG CHUẨN CHÂU ÂU CEFR (A1 – C2)
-              </span>
-              <h2 className="fw-bolder mb-1">🗺️ Bản Đồ Lộ Trình Học Tập</h2>
-              <p className="text-muted small">
-                Tích lũy XP để mở khóa các mốc kiến thức cao hơn. Không học bài sẽ bị trừ XP và gãy chuỗi Streak!
-              </p>
-            </div>
-
-            {/* Current XP Progress to Next Level */}
-            <div className="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <span className="fw-bold text-dark">
-                  ⚡ Điểm hiện tại: <span className="text-primary">{xp} XP</span>
-                </span>
-                <span className="small text-muted fw-bold">
-                  {xp >= 1000 ? 'Đã đạt cấp độ Tinh thông 👑' : `Cần ${Math.max(0, (ROADMAP_MILESTONES.find(m => m.requiredXp > xp)?.requiredXp || 1000) - xp)} XP nữa để mở mốc kế`}
-                </span>
-              </div>
-              <div className="duo-progress">
-                <div
-                  className="duo-progress-bar"
-                  style={{ width: `${Math.min(100, (xp / 1000) * 100)}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Roadmap Visual Tree */}
-            <div className="roadmap-container">
-              <div className="roadmap-path-line" />
-
-              {ROADMAP_MILESTONES.map((milestone, idx) => {
-                const isUnlocked = xp >= milestone.requiredXp;
-                const isCurrent = isUnlocked && (idx === ROADMAP_MILESTONES.length - 1 || xp < ROADMAP_MILESTONES[idx + 1].requiredXp);
-                const isCompleted = isUnlocked && !isCurrent;
-
-                return (
-                  <div key={milestone.id} className="roadmap-checkpoint">
-                    <button
-                      className={`roadmap-node-btn ${isCompleted ? 'completed' : isCurrent ? 'current' : 'locked'}`}
-                      onClick={() => {
-                        if (isUnlocked) {
-                          setActiveTab('flashcards');
-                          playSoundEffect('flip');
-                        } else {
-                          playSoundEffect('wrong');
-                          alert(`Mốc này yêu cầu ${milestone.requiredXp} XP để mở khóa! Hiện tại bạn có ${xp} XP. Hãy hoàn thành các bài học để kiếm thêm điểm.`);
-                        }
-                      }}
-                      title={isUnlocked ? 'Nhấn để vào học' : `Khóa - Cần ${milestone.requiredXp} XP`}
-                    >
-                      <span style={{ fontSize: '1.85rem' }}>{milestone.icon}</span>
-                      {isCompleted && (
-                        <span style={{ fontSize: '0.65rem' }}>⭐⭐⭐</span>
-                      )}
-                      {!isUnlocked && (
-                        <span style={{ fontSize: '0.75rem' }}>🔒</span>
-                      )}
-                    </button>
-
-                    <div className="roadmap-info-box">
-                      <div className="d-flex align-items-center justify-content-center gap-1 mb-1">
-                        <span className="badge bg-light text-dark border px-2 py-0 small fw-bold">
-                          {milestone.level}
-                        </span>
-                        <strong className="fs-6 text-dark">{milestone.title}</strong>
-                      </div>
-                      <p className="text-muted small mb-2" style={{ fontSize: '0.75rem', lineHeight: '1.3' }}>
-                        {milestone.description}
-                      </p>
-                      {isCurrent && (
-                        <button
-                          className="btn btn-sm btn-duo btn-duo-green py-1 px-3 w-100"
-                          style={{ fontSize: '0.75rem' }}
-                          onClick={() => setActiveTab('flashcards')}
-                        >
-                          Học bài ngay 🎯
-                        </button>
-                      )}
-                      {!isUnlocked && (
-                        <small className="text-danger fw-bold" style={{ fontSize: '0.7rem' }}>
-                          Cần {milestone.requiredXp} XP để mở
-                        </small>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* TAB 1: 3D FLASHCARDS SRS */}
-        {activeTab === 'flashcards' && currentVocab && (
-          <div className="mx-auto" style={{ maxWidth: '520px' }}>
-            <div className="d-flex align-items-center justify-content-between mb-2">
-              <span className="fw-bold text-muted" style={{ fontSize: '0.9rem' }}>
-                Thẻ {currentVocabIndex + 1} / {vocabulary.length}
-              </span>
-              <span className="badge bg-success-subtle text-success fw-bold px-3 py-1 rounded-pill">
-                ✨ Đã nhớ: {learnedCount} từ
-              </span>
-            </div>
-
-            <div className="duo-progress mb-4">
-              <div
-                className="duo-progress-bar"
-                style={{ width: `${((currentVocabIndex + 1) / vocabulary.length) * 100}%` }}
-              />
-            </div>
-
-            {/* 3D Flip Card Container */}
-            <div className="perspective-container mb-3">
-              <div
-                className={`flashcard-3d ${isFlipped ? 'is-flipped' : ''}`}
-                onClick={handleCardFlip}
-                title="Bấm vào thẻ để lật xem nghĩa"
-              >
-                {/* MẶT TRƯỚC (FRONT) */}
-                <div className="card-face">
-                  <div className="d-flex justify-content-between align-items-center w-100">
-                    <span className={`badge px-3 py-2 rounded-pill text-uppercase ${getPosBadgeColor(currentVocab.part_of_speech)}`}>
-                      {currentVocab.part_of_speech}
-                    </span>
-
-                    <button
-                      className="btn btn-sm btn-light rounded-circle p-2 text-warning"
-                      onClick={(e) => toggleBookmark(currentVocab.id, e)}
-                      title="Đánh dấu từ yêu thích"
-                    >
-                      {bookmarkedIds.has(currentVocab.id) ? '⭐' : '☆'}
-                    </button>
-                  </div>
-
-                  <div className="text-center my-auto">
-                    <h1 className="display-4 fw-bolder mb-2 text-dark" style={{ letterSpacing: '-1px' }}>
-                      {currentVocab.word}
-                    </h1>
-
-                    <p className="fs-4 text-muted fw-semibold mb-3">
-                      {currentVocab.ipa}
-                    </p>
-
-                    <button
-                      className={`audio-play-btn ${isSpeaking ? 'speaker-active' : ''}`}
-                      onClick={(e) => handlePronounce(currentVocab.word, 0.88, e)}
-                      title="Phát âm từ vựng (giọng Anh-Mỹ bản ngữ)"
-                    >
-                      <span style={{ fontSize: '1.5rem' }}>🔊</span>
-                    </button>
-                  </div>
-
-                  <div className="text-center text-muted" style={{ fontSize: '0.85rem' }}>
-                    <span>🔄 Chạm vào thẻ để lật xem nghĩa & ví dụ</span>
-                  </div>
-                </div>
-
-                {/* MẶT SAU (BACK) */}
-                <div className="card-face card-face-back">
-                  <div className="d-flex justify-content-between align-items-center w-100">
-                    <span className="badge bg-success text-white px-3 py-2 rounded-pill">
-                      Ý NGHĨA & NGỮ CẢNH
-                    </span>
-                    <button
-                      className="btn btn-sm btn-outline-success rounded-pill px-3 py-1"
-                      onClick={(e) => handlePronounce(currentVocab.word, 0.88, e)}
-                    >
-                      🔊 Nghe lại
-                    </button>
-                  </div>
-
-                  <div className="text-center my-auto">
-                    <h2 className="fw-bolder text-success mb-3" style={{ fontSize: '1.75rem' }}>
-                      {currentVocab.meanings[0]?.meaning}
-                    </h2>
-
-                    {currentVocab.examples && currentVocab.examples[0] && (
-                      <div className="p-3 rounded-4 bg-white border border-success-subtle shadow-sm text-start mb-2">
-                        <div className="d-flex align-items-start justify-content-between gap-2">
-                          <p className="fw-bold text-dark mb-1 fs-6">
-                            "{currentVocab.examples[0].sentence}"
-                          </p>
-                          <button
-                            className="btn btn-sm btn-light text-primary p-1 border-0"
-                            onClick={(e) => handlePronounce(currentVocab.examples[0].sentence, 0.85, e)}
-                            title="Nghe phát âm cả câu"
-                          >
-                            🔊
-                          </button>
-                        </div>
-                        <p className="text-muted mb-0 small fst-italic">
-                          👉 {currentVocab.examples[0].translation}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="text-center text-muted" style={{ fontSize: '0.85rem' }}>
-                    <span>🔄 Chạm để quay lại mặt trước</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* SRS Rating Control Bar (4 Anki levels) */}
-            <div className="bg-white p-3 rounded-4 shadow-sm border mb-3">
-              <div className="text-center text-muted small fw-bold mb-2">
-                BẠN ĐÃ NHỚ TỪ NÀY NHƯ THẾ NÀO? (SRS)
-              </div>
-              <div className="row g-2 text-center">
-                <div className="col-3">
-                  <button
-                    className="btn btn-duo btn-duo-red w-100 py-2"
-                    onClick={() => handleRateCard('again')}
-                  >
-                    <span>🔴</span>
-                    <span className="d-none d-sm-inline">Lại</span>
-                  </button>
-                  <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+1 phút</small>
-                </div>
-
-                <div className="col-3">
-                  <button
-                    className="btn btn-duo btn-duo-yellow w-100 py-2"
-                    onClick={() => handleRateCard('hard')}
-                  >
-                    <span>🟡</span>
-                    <span className="d-none d-sm-inline">Khó</span>
-                  </button>
-                  <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+10 phút</small>
-                </div>
-
-                <div className="col-3">
-                  <button
-                    className="btn btn-duo btn-duo-green w-100 py-2"
-                    onClick={() => handleRateCard('good')}
-                  >
-                    <span>🟢</span>
-                    <span className="d-none d-sm-inline">Nhớ</span>
-                  </button>
-                  <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+1 ngày</small>
-                </div>
-
-                <div className="col-3">
-                  <button
-                    className="btn btn-duo btn-duo-purple w-100 py-2"
-                    onClick={() => handleRateCard('easy')}
-                  >
-                    <span>🔵</span>
-                    <span className="d-none d-sm-inline">Dễ</span>
-                  </button>
-                  <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+4 ngày</small>
-                </div>
-              </div>
-            </div>
-
-            <div className="d-flex justify-content-between align-items-center">
-              <button
-                className="btn btn-duo btn-duo-outline px-3"
-                onClick={() => {
-                  setIsFlipped(false);
-                  setCurrentVocabIndex((prev) => (prev - 1 + vocabulary.length) % vocabulary.length);
-                }}
-              >
-                ← Thẻ trước
-              </button>
-
-              <button
-                className="btn btn-duo btn-duo-outline px-3"
-                onClick={() => {
-                  setIsFlipped(false);
-                  setCurrentVocabIndex((prev) => (prev + 1) % vocabulary.length);
-                }}
-              >
-                Thẻ kế tiếp →
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 2: LUYỆN NGHE CHÍNH TẢ (DICTATION - ẨN CHỮ & TIẾNG VIỆT ĐÚNG THEO GÓP Ý) */}
-        {activeTab === 'spell' && currentVocab && (
-          <div className="mx-auto" style={{ maxWidth: '520px' }}>
-            <div className="text-center mb-4">
-              <span className="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill fw-bold mb-2">
-                🎧 LUYỆN TAI BẢN NGỮ
-              </span>
-              <h2 className="fw-bolder mb-1">Luyện Nghe & Viết Chính Tả</h2>
-              <p className="text-muted small">
-                Chỉ lắng nghe âm thanh và gõ lại từ vựng. Nghĩa và phiên âm đã được ẩn hoàn toàn để rèn luyện phản xạ nghe thật!
-              </p>
-            </div>
-
-            <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white mb-3">
-              {/* Big Speaker Button */}
-              <button
-                className={`audio-play-btn mx-auto mb-3 ${isSpeaking ? 'speaker-active' : ''}`}
-                style={{ width: '84px', height: '84px' }}
-                onClick={() => handlePronounce(currentVocab.word, listenSpeed)}
-                title="Bấm để nghe phát âm"
-              >
-                <span style={{ fontSize: '2.4rem' }}>🔊</span>
-              </button>
-
-              {/* Speed Controls: Normal vs Turtle Slow */}
-              <div className="d-flex justify-content-center gap-2 mb-3">
-                <button
-                  type="button"
-                  className={`audio-speed-btn ${listenSpeed === 0.9 ? 'active' : ''}`}
-                  onClick={() => {
-                    setListenSpeed(0.9);
-                    handlePronounce(currentVocab.word, 0.9);
-                  }}
-                >
-                  ⚡ Bình thường (1.0x)
-                </button>
-                <button
-                  type="button"
-                  className={`audio-speed-btn ${listenSpeed === 0.65 ? 'active' : ''}`}
-                  onClick={() => {
-                    setListenSpeed(0.65);
-                    handlePronounce(currentVocab.word, 0.65);
-                  }}
-                >
-                  🐢 Chậm (0.65x)
-                </button>
-              </div>
-
-              {/* Optional Hint Button (cost 5 XP) */}
-              {!showListenHint && spellFeedback === 'none' && (
-                <div className="mb-3">
-                  <button
-                    className="btn btn-sm btn-link text-muted text-decoration-none"
-                    onClick={() => {
-                      setShowListenHint(true);
-                      deductXp(5);
-                    }}
-                    style={{ fontSize: '0.8rem' }}
-                  >
-                    💡 Cần gợi ý chữ cái đầu? (-5 XP)
-                  </button>
-                </div>
-              )}
-
-              {showListenHint && spellFeedback === 'none' && (
-                <div className="alert alert-secondary py-2 px-3 small rounded-pill mb-3">
-                  Gợi ý: Bắt đầu bằng chữ <strong>"{currentVocab.word[0].toUpperCase()}"</strong> ({currentVocab.word.length} chữ cái)
-                </div>
-              )}
-
-              {/* Text Input */}
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control form-control-lg text-center fw-bold rounded-pill"
-                  placeholder="Gõ từ tiếng Anh bạn nghe được..."
-                  value={spellInput}
-                  onChange={(e) => {
-                    setSpellInput(e.target.value);
-                    setSpellFeedback('none');
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleSpellCheck();
-                  }}
-                  autoFocus
-                />
-              </div>
-
-              {/* Feedback Alert: ONLY reveal meaning & IPA AFTER check */}
-              {spellFeedback === 'correct' && (
-                <div className="alert alert-success rounded-4 text-start p-3 mb-3">
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    <span className="fs-4">🎉</span>
-                    <strong className="fs-5 text-success">CHÍNH XÁC! (+20 XP)</strong>
-                  </div>
-                  <div>
-                    Từ bạn vừa nghe: <strong className="fs-5">{currentVocab.word}</strong> <span className="text-muted">{currentVocab.ipa}</span>
-                  </div>
-                  <div className="text-success-emphasis fw-bold mt-1">
-                    👉 Nghĩa: {currentVocab.meanings[0]?.meaning}
-                  </div>
-                </div>
-              )}
-
-              {spellFeedback === 'wrong' && (
-                <div className="alert alert-danger rounded-4 text-start p-3 mb-3">
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    <span className="fs-4">❌</span>
-                    <strong className="fs-5 text-danger">Chưa chính xác rồi!</strong>
-                  </div>
-                  <div>
-                    Đáp án đúng là: <strong className="fs-5">{currentVocab.word}</strong> <span className="text-muted">{currentVocab.ipa}</span>
-                  </div>
-                  <div className="text-danger-emphasis fw-bold mt-1">
-                    👉 Nghĩa: {currentVocab.meanings[0]?.meaning}
-                  </div>
-                </div>
-              )}
-
-              {/* Action Buttons */}
-              <div className="d-flex gap-2 justify-content-center">
-                {spellFeedback === 'none' ? (
-                  <button
-                    className="btn btn-duo btn-duo-green px-4 py-2"
-                    onClick={handleSpellCheck}
-                    disabled={!spellInput.trim()}
-                  >
-                    Kiểm tra đáp án 🚀
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-duo btn-duo-purple px-4 py-2"
-                    onClick={handleNextSpellWord}
-                  >
-                    Từ tiếp theo →
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 3: VIẾT ĐOẠN VĂN HOẶC NHẬT KÝ THEO LỘ TRÌNH (JOURNAL & WRITING) */}
-        {activeTab === 'writing' && (
-          <div className="mx-auto" style={{ maxWidth: '720px' }}>
-            <div className="text-center mb-4">
-              <span className="badge bg-purple-subtle text-primary px-3 py-1 rounded-pill fw-bold mb-2">
-                ✍️ RÈN LUYỆN KỸ NĂNG VIẾT
-              </span>
-              <h2 className="fw-bolder mb-1">Nhật Ký & Viết Văn Theo Lộ Trình</h2>
-              <p className="text-muted small">
-                Chọn chủ đề phù hợp với cấp độ của bạn, vận dụng từ vựng đã học và nhận phản hồi chấm điểm ngay lập tức!
-              </p>
-            </div>
-
-            {/* Prompt Selector Pills */}
-            <div className="d-flex gap-2 overflow-auto pb-2 mb-4">
-              {WRITING_PROMPTS.map((p) => (
-                <button
-                  key={p.id}
-                  className={`btn btn-sm rounded-pill px-3 py-2 text-nowrap fw-bold ${selectedPromptId === p.id ? 'btn-primary' : 'btn-outline-secondary'}`}
-                  onClick={() => {
-                    setSelectedPromptId(p.id);
-                    setJournalFeedback(null);
-                  }}
-                >
-                  <span className="badge bg-light text-dark me-1">{p.level}</span>
-                  {p.title.split('(')[0]}
-                </button>
-              ))}
-            </div>
-
-            {/* Writing Prompt Instruction Card */}
-            <div className="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <span className="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-bold">
-                  {activePrompt.level}
-                </span>
-                <span className="small text-muted fw-bold">
-                  Yêu cầu: Tối thiểu {activePrompt.minWords} từ
-                </span>
-              </div>
-
-              <h4 className="fw-bolder text-dark mb-2">{activePrompt.title}</h4>
-              <p className="text-muted mb-3">{activePrompt.instructions}</p>
-
-              {/* Target Keywords Tags */}
-              <div className="mb-3">
-                <span className="small fw-bold text-muted d-block mb-2">
-                  Từ vựng mục tiêu cần áp dụng (Gõ vào bài để sáng xanh ✅):
-                </span>
-                <div className="d-flex flex-wrap gap-2">
-                  {activePrompt.targetKeywords.map((kw) => {
-                    const isUsed = matchedKeywords.includes(kw);
-                    return (
-                      <span key={kw} className={`keyword-chip ${isUsed ? 'matched' : ''}`}>
-                        {isUsed ? '✅ ' : '○ '}
-                        {kw}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Journal Editor Textarea */}
-              <div className="mb-3">
-                <textarea
-                  className="form-control rounded-4 p-3 fs-6"
-                  rows={6}
-                  placeholder="Bắt đầu viết nhật ký bằng tiếng Anh của bạn tại đây..."
-                  value={journalText}
-                  onChange={(e) => setJournalText(e.target.value)}
-                />
-              </div>
-
-              {/* Word count & Progress */}
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <div className="small fw-bold">
-                  Số từ đã viết: <span className={journalWordCount >= activePrompt.minWords ? 'text-success' : 'text-danger'}>{journalWordCount}</span> / {activePrompt.minWords} từ
-                </div>
-
-                <div className="small text-muted">
-                  Từ vựng mục tiêu: {matchedKeywords.length} / {activePrompt.targetKeywords.length} từ
-                </div>
-              </div>
-
-              {/* Feedback Alert */}
-              {journalFeedback && (
-                <div className="alert alert-success rounded-4 p-3 mb-3">
-                  <div className="fw-bold mb-1">🎉 Nhận xét bài viết:</div>
-                  <div>{journalFeedback}</div>
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <button
-                className="btn btn-duo btn-duo-green w-100 py-3 fs-5"
-                onClick={handleSubmitJournal}
-                disabled={journalWordCount === 0}
-              >
-                Nộp bài nhật ký & Chấm điểm (+50 XP) 🚀
-              </button>
-            </div>
-
-            {/* Saved Journal History */}
-            <div className="mt-5">
-              <h4 className="fw-bolder mb-3">📖 Lịch Sử Nhật Ký Của Bạn ({savedEntries.length})</h4>
-
-              <div className="d-flex flex-column gap-3">
-                {savedEntries.map((entry) => (
-                  <div key={entry.id} className="journal-entry-card">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="badge bg-light text-primary border rounded-pill px-2 py-1 small fw-bold">
-                        {entry.level}
-                      </span>
-                      <small className="text-muted">{entry.createdAt}</small>
-                    </div>
-
-                    <h5 className="fw-bold text-dark mb-2">{entry.title}</h5>
-
-                    <p className="p-3 rounded-3 bg-light text-dark mb-2" style={{ whiteSpace: 'pre-wrap' }}>
-                      "{entry.body}"
-                    </p>
-
-                    <div className="d-flex justify-content-between align-items-center small text-muted">
-                      <span>Độ dài: {entry.wordCount} từ</span>
-                      <span className="text-success fw-bold">
-                        Đã áp dụng: {entry.matchedKeywords.join(', ')}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 4: MINIGAME GHÉP TỪ */}
-        {activeTab === 'match' && (
-          <div className="mx-auto" style={{ maxWidth: '640px' }}>
-            <div className="text-center mb-4">
-              <h2 className="fw-bolder mb-1">🎮 Minigame Ghép Từ Siêu Tốc</h2>
-              <p className="text-muted small">
-                Nối từ tiếng Anh với nghĩa tiếng Việt tương ứng càng nhanh càng tốt!
-              </p>
-            </div>
-
-            {matchGameWon ? (
-              <div className="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
-                <span style={{ fontSize: '4rem' }} className="mb-2">🏆</span>
-                <h2 className="fw-bolder text-success mb-2">XUẤT SẮC! BẠN ĐÃ CHIẾN THẮNG!</h2>
-                <p className="text-muted mb-4">
-                  Bạn đã ghép chính xác toàn bộ cặp từ vựng! Thưởng <strong>+75 XP</strong> và <strong>+5 💎</strong>.
-                </p>
-                <button className="btn btn-duo btn-duo-green px-5 py-3 fs-5 mx-auto" onClick={initMatchGame}>
-                  🔁 Chơi ván mới
-                </button>
-              </div>
-            ) : (
-              <div>
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <span className="fw-bold text-muted">
-                    Tiến độ: {matchedIds.size / 2} / {matchCards.length / 2} cặp
+            {/* TAB 0: ROADMAP (CƠ CHẾ LỘ TRÌNH DUOLINGO STYLE) */}
+            {activeTab === 'roadmap' && (
+              <div className="mx-auto" style={{ maxWidth: '680px' }}>
+                <div className="text-center mb-4">
+                  <span className="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-bold mb-2">
+                    KHUNG CHUẨN CHÂU ÂU CEFR (A1 – C2)
                   </span>
-                  <button className="btn btn-sm btn-outline-secondary rounded-pill px-3" onClick={initMatchGame}>
-                    Trộn lại 🎲
-                  </button>
+                  <h2 className="fw-bolder mb-1">🗺️ Bản Đồ Lộ Trình Học Tập</h2>
+                  <p className="text-muted small">
+                    Tích lũy XP để mở khóa các mốc kiến thức cao hơn. Không học bài sẽ bị trừ XP và gãy chuỗi Streak!
+                  </p>
                 </div>
 
-                <div className="row g-3">
-                  {matchCards.map((card) => {
-                    const isSelected = selectedCards.some((c) => c.id === card.id);
-                    const isMatched = matchedIds.has(card.id);
-                    const isWrong = wrongPair.includes(card.id);
+                <div className="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="fw-bold text-dark">
+                      ⚡ Điểm hiện tại: <span className="text-primary">{xp} XP</span>
+                    </span>
+                    <span className="small text-muted fw-bold">
+                      {xp >= 1000 ? 'Đã đạt cấp độ Tinh thông 👑' : `Cần ${Math.max(0, (ROADMAP_MILESTONES.find(m => m.requiredXp > xp)?.requiredXp || 1000) - xp)} XP nữa để mở mốc kế`}
+                    </span>
+                  </div>
+                  <div className="duo-progress">
+                    <div
+                      className="duo-progress-bar"
+                      style={{ width: `${Math.min(100, (xp / 1000) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="roadmap-container">
+                  <div className="roadmap-path-line" />
+
+                  {ROADMAP_MILESTONES.map((milestone, idx) => {
+                    const isUnlocked = xp >= milestone.requiredXp;
+                    const isCurrent = isUnlocked && (idx === ROADMAP_MILESTONES.length - 1 || xp < ROADMAP_MILESTONES[idx + 1].requiredXp);
+                    const isCompleted = isUnlocked && !isCurrent;
 
                     return (
-                      <div key={card.id} className="col-6">
-                        <div
-                          className={`match-card ${isSelected ? 'selected' : ''} ${isMatched ? 'matched' : ''} ${isWrong ? 'wrong shake-animation' : ''}`}
-                          onClick={() => handleMatchCardClick(card)}
+                      <div key={milestone.id} className="roadmap-checkpoint">
+                        <button
+                          className={`roadmap-node-btn ${isCompleted ? 'completed' : isCurrent ? 'current' : 'locked'}`}
+                          onClick={() => {
+                            if (isUnlocked) {
+                              setActiveTab('flashcards');
+                              playSoundEffect('flip');
+                            } else {
+                              playSoundEffect('wrong');
+                              alert(`Mốc này yêu cầu ${milestone.requiredXp} XP để mở khóa! Hiện tại bạn có ${xp} XP. Hãy hoàn thành các bài học để kiếm thêm điểm.`);
+                            }
+                          }}
+                          title={isUnlocked ? 'Nhấn để vào học' : `Khóa - Cần ${milestone.requiredXp} XP`}
                         >
-                          <div className="py-2">
-                            {card.text}
+                          <span style={{ fontSize: '1.85rem' }}>{milestone.icon}</span>
+                          {isCompleted && (
+                            <span style={{ fontSize: '0.65rem' }}>⭐⭐⭐</span>
+                          )}
+                          {!isUnlocked && (
+                            <span style={{ fontSize: '0.75rem' }}>🔒</span>
+                          )}
+                        </button>
+
+                        <div className="roadmap-info-box">
+                          <div className="d-flex align-items-center justify-content-center gap-1 mb-1">
+                            <span className="badge bg-light text-dark border px-2 py-0 small fw-bold">
+                              {milestone.level}
+                            </span>
+                            <strong className="fs-6 text-dark">{milestone.title}</strong>
                           </div>
-                          {card.type === 'en' && (
-                            <small className="text-muted d-block fw-normal" style={{ fontSize: '0.75rem' }}>
-                              🔊 Chạm để nghe
+                          <p className="text-muted small mb-2" style={{ fontSize: '0.75rem', lineHeight: '1.3' }}>
+                            {milestone.description}
+                          </p>
+                          {isCurrent && (
+                            <button
+                              className="btn btn-sm btn-duo btn-duo-green py-1 px-3 w-100"
+                              style={{ fontSize: '0.75rem' }}
+                              onClick={() => setActiveTab('flashcards')}
+                            >
+                              Học bài ngay 🎯
+                            </button>
+                          )}
+                          {!isUnlocked && (
+                            <small className="text-danger fw-bold" style={{ fontSize: '0.7rem' }}>
+                              Cần {milestone.requiredXp} XP để mở
                             </small>
                           )}
                         </div>
@@ -1701,279 +1531,1037 @@ export default function App() {
                 </div>
               </div>
             )}
-          </div>
-        )}
 
-        {/* TAB 5: TRẮC NGHIỆM QUIZ */}
-        {activeTab === 'quiz' && (
-          <div className="mx-auto" style={{ maxWidth: '680px' }}>
-            <div className="text-center mb-4">
-              <h2 className="fw-bolder mb-1">{quiz.title}</h2>
-              <p className="text-muted small">{quiz.description}</p>
-            </div>
+            {/* TAB 1: 3D FLASHCARDS SRS VỚI HÌNH ẢNH TRỰC QUAN */}
+            {activeTab === 'flashcards' && currentVocab && (
+              <div className="mx-auto" style={{ maxWidth: '520px' }}>
+                <div className="d-flex align-items-center justify-content-between mb-2">
+                  <span className="fw-bold text-muted" style={{ fontSize: '0.9rem' }}>
+                    Thẻ {currentVocabIndex + 1} / {filteredVocabList.length}
+                  </span>
+                  <span className="badge bg-success-subtle text-success fw-bold px-3 py-1 rounded-pill">
+                    ✨ Đã nhớ: {learnedCount} từ
+                  </span>
+                </div>
 
-            {quizResult && (
-              <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white mb-4">
-                <span style={{ fontSize: '3.5rem' }}>{quizResult.passed ? '🎉' : '💪'}</span>
-                <h3 className={`fw-bolder mb-2 ${quizResult.passed ? 'text-success' : 'text-warning'}`}>
-                  {quizResult.passed ? 'Chúc mừng! Bạn đã vượt qua bài test!' : 'Cố lên! Hãy ôn lại từ vựng nhé!'}
-                </h3>
-                <p className="fs-5 fw-bold text-dark mb-3">
-                  Điểm số: {quizResult.earned_points} / {quizResult.total_points} ({quizResult.score_percent}%)
-                </p>
+                <div className="duo-progress mb-3">
+                  <div
+                    className="duo-progress-bar"
+                    style={{ width: `${((currentVocabIndex + 1) / filteredVocabList.length) * 100}%` }}
+                  />
+                </div>
 
-                <div className="text-start mt-3">
-                  <h6 className="fw-bold text-muted mb-3">Chi tiết từng câu hỏi:</h6>
-                  {quizResult.results.map((res, i) => (
-                    <div key={i} className={`p-3 rounded-4 mb-2 border ${res.is_correct ? 'bg-success-subtle border-success' : 'bg-danger-subtle border-danger'}`}>
-                      <div className="fw-bold mb-1">
-                        Câu {i + 1}: {res.prompt}
+                {/* Topic Filter Pills */}
+                <div className="d-flex gap-2 overflow-auto pb-2 mb-3">
+                  <button
+                    className={`btn btn-sm rounded-pill px-3 py-1 fw-bold ${selectedTopic === 'all' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                    onClick={() => { setSelectedTopic('all'); setCurrentVocabIndex(0); }}
+                  >
+                    Tất cả chủ đề
+                  </button>
+                  <button
+                    className={`btn btn-sm rounded-pill px-3 py-1 fw-bold ${selectedTopic === 'daily' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                    onClick={() => { setSelectedTopic('daily'); setCurrentVocabIndex(0); }}
+                  >
+                    ☕ Đời sống
+                  </button>
+                  <button
+                    className={`btn btn-sm rounded-pill px-3 py-1 fw-bold ${selectedTopic === 'travel' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                    onClick={() => { setSelectedTopic('travel'); setCurrentVocabIndex(0); }}
+                  >
+                    ✈️ Du lịch
+                  </button>
+                  <button
+                    className={`btn btn-sm rounded-pill px-3 py-1 fw-bold ${selectedTopic === 'business' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                    onClick={() => { setSelectedTopic('business'); setCurrentVocabIndex(0); }}
+                  >
+                    💼 Công sở
+                  </button>
+                  <button
+                    className={`btn btn-sm rounded-pill px-3 py-1 fw-bold ${selectedTopic === 'academic' ? 'btn-primary' : 'btn-outline-secondary'}`}
+                    onClick={() => { setSelectedTopic('academic'); setCurrentVocabIndex(0); }}
+                  >
+                    🎯 Học thuật
+                  </button>
+                </div>
+
+                {/* 3D Flip Card Container */}
+                <div className="perspective-container mb-3">
+                  <div
+                    className={`flashcard-3d ${isFlipped ? 'is-flipped' : ''}`}
+                    onClick={handleCardFlip}
+                    title="Bấm vào thẻ để lật xem nghĩa"
+                  >
+                    {/* MẶT TRƯỚC (FRONT) */}
+                    <div className="card-face">
+                      <div className="d-flex justify-content-between align-items-center w-100 mb-2">
+                        <span className={`badge px-3 py-1 rounded-pill text-uppercase ${getPosBadgeColor(currentVocab.part_of_speech)}`}>
+                          {currentVocab.part_of_speech}
+                        </span>
+
+                        <button
+                          className="btn btn-sm btn-light rounded-circle p-2 text-warning"
+                          onClick={(e) => toggleBookmark(currentVocab.id, e)}
+                          title="Đánh dấu từ yêu thích"
+                        >
+                          {bookmarkedIds.has(currentVocab.id) ? '⭐' : '☆'}
+                        </button>
                       </div>
-                      <div className="small">
-                        Đáp án bạn chọn: <strong>{res.user_choice}</strong> | Đáp án đúng: <strong>{res.correct_choice}</strong>
+
+                      {/* Visual Photo Header */}
+                      {currentVocab.image_url && (
+                        <img
+                          src={currentVocab.image_url}
+                          alt={currentVocab.word}
+                          className="card-thumb-img shadow-sm"
+                          loading="lazy"
+                        />
+                      )}
+
+                      <div className="text-center my-auto">
+                        <h2 className="display-5 fw-bolder mb-1 text-dark" style={{ letterSpacing: '-1px' }}>
+                          {currentVocab.word}
+                        </h2>
+
+                        <p className="fs-5 text-muted fw-semibold mb-2">
+                          {currentVocab.ipa}
+                        </p>
+
+                        <div className="d-flex justify-content-center gap-2">
+                          <button
+                            className={`audio-play-btn ${isSpeaking ? 'speaker-active' : ''}`}
+                            onClick={(e) => handlePronounce(currentVocab.word, 0.88, e)}
+                            title="Nghe phát âm chuẩn bản ngữ"
+                          >
+                            <span style={{ fontSize: '1.4rem' }}>🔊</span>
+                          </button>
+
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fw-bold"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveTab('speech');
+                            }}
+                            title="Chuyển sang chế độ luyện nói chấm điểm ELSA"
+                          >
+                            🎙️ Luyện phát âm
+                          </button>
+                        </div>
                       </div>
-                      <div className="small text-muted mt-1 fst-italic">
-                        💡 Giải thích: {res.explanation}
+
+                      <div className="text-center text-muted" style={{ fontSize: '0.82rem' }}>
+                        <span>🔄 Chạm vào thẻ để lật xem nghĩa & câu ví dụ</span>
                       </div>
+                    </div>
+
+                    {/* MẶT SAU (BACK) */}
+                    <div className="card-face card-face-back">
+                      <div className="d-flex justify-content-between align-items-center w-100">
+                        <span className="badge bg-success text-white px-3 py-2 rounded-pill">
+                          Ý NGHĨA & NGỮ CẢNH
+                        </span>
+                        <button
+                          className="btn btn-sm btn-outline-success rounded-pill px-3 py-1"
+                          onClick={(e) => handlePronounce(currentVocab.word, 0.88, e)}
+                        >
+                          🔊 Nghe lại
+                        </button>
+                      </div>
+
+                      <div className="text-center my-auto">
+                        <h2 className="fw-bolder text-success mb-3" style={{ fontSize: '1.75rem' }}>
+                          {currentVocab.meanings[0]?.meaning}
+                        </h2>
+
+                        {currentVocab.examples && currentVocab.examples[0] && (
+                          <div className="p-3 rounded-4 bg-white border border-success-subtle shadow-sm text-start mb-2">
+                            <div className="d-flex align-items-start justify-content-between gap-2">
+                              <p className="fw-bold text-dark mb-1 fs-6">
+                                "{currentVocab.examples[0].sentence}"
+                              </p>
+                              <button
+                                className="btn btn-sm btn-light text-primary p-1 border-0"
+                                onClick={(e) => handlePronounce(currentVocab.examples[0].sentence, 0.85, e)}
+                                title="Nghe phát âm cả câu"
+                              >
+                                🔊
+                              </button>
+                            </div>
+                            <p className="text-muted mb-0 small fst-italic">
+                              👉 {currentVocab.examples[0].translation}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="text-center text-muted" style={{ fontSize: '0.85rem' }}>
+                        <span>🔄 Chạm để quay lại mặt trước</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* SRS Rating Control Bar */}
+                <div className="bg-white p-3 rounded-4 shadow-sm border mb-3">
+                  <div className="text-center text-muted small fw-bold mb-2">
+                    BẠN ĐÃ NHỚ TỪ NÀY NHƯ THẾ NÀO? (SRS)
+                  </div>
+                  <div className="row g-2 text-center">
+                    <div className="col-3">
+                      <button
+                        className="btn btn-duo btn-duo-red w-100 py-2"
+                        onClick={() => handleRateCard('again')}
+                      >
+                        <span>🔴</span>
+                        <span className="d-none d-sm-inline">Lại</span>
+                      </button>
+                      <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+1 phút</small>
+                    </div>
+
+                    <div className="col-3">
+                      <button
+                        className="btn btn-duo btn-duo-yellow w-100 py-2"
+                        onClick={() => handleRateCard('hard')}
+                      >
+                        <span>🟡</span>
+                        <span className="d-none d-sm-inline">Khó</span>
+                      </button>
+                      <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+10 phút</small>
+                    </div>
+
+                    <div className="col-3">
+                      <button
+                        className="btn btn-duo btn-duo-green w-100 py-2"
+                        onClick={() => handleRateCard('good')}
+                      >
+                        <span>🟢</span>
+                        <span className="d-none d-sm-inline">Nhớ</span>
+                      </button>
+                      <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+1 ngày</small>
+                    </div>
+
+                    <div className="col-3">
+                      <button
+                        className="btn btn-duo btn-duo-purple w-100 py-2"
+                        onClick={() => handleRateCard('easy')}
+                      >
+                        <span>🔵</span>
+                        <span className="d-none d-sm-inline">Dễ</span>
+                      </button>
+                      <small className="text-muted d-block mt-1" style={{ fontSize: '0.7rem' }}>+4 ngày</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="d-flex justify-content-between align-items-center">
+                  <button
+                    className="btn btn-duo btn-duo-outline px-3"
+                    onClick={() => {
+                      setIsFlipped(false);
+                      setCurrentVocabIndex((prev) => (prev - 1 + filteredVocabList.length) % filteredVocabList.length);
+                    }}
+                  >
+                    ← Thẻ trước
+                  </button>
+
+                  <button
+                    className="btn btn-duo btn-duo-outline px-3"
+                    onClick={() => {
+                      setIsFlipped(false);
+                      setCurrentVocabIndex((prev) => (prev + 1) % filteredVocabList.length);
+                    }}
+                  >
+                    Thẻ kế tiếp →
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 2: LUYỆN NÓI & NHẬN DIỆN PHÁT ÂM (ELSA SPEAK STYLE) */}
+            {activeTab === 'speech' && currentVocab && (
+              <div className="mx-auto" style={{ maxWidth: '580px' }}>
+                <div className="text-center mb-4">
+                  <span className="badge bg-danger-subtle text-danger px-3 py-1 rounded-pill fw-bold mb-2">
+                    🎙️ AI PRONUNCIATION COACH
+                  </span>
+                  <h2 className="fw-bolder mb-1">Luyện Nói & Chấm Điểm Phát Âm</h2>
+                  <p className="text-muted small">
+                    Bấm Micro, đọc từ tiếng Anh to rõ để hệ thống phân tích và chấm điểm chuẩn âm bản ngữ!
+                  </p>
+                </div>
+
+                <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white mb-3">
+                  {/* Target Word */}
+                  <div className="mb-3">
+                    <span className="badge bg-light text-muted border px-3 py-1 rounded-pill small mb-2">
+                      Từ vựng cần luyện đọc:
+                    </span>
+                    <h1 className="display-4 fw-bolder text-primary mb-1">{currentVocab.word}</h1>
+                    <p className="fs-5 text-muted fw-semibold">{currentVocab.ipa}</p>
+                    <p className="text-success fw-bold">👉 Nghĩa: {currentVocab.meanings[0]?.meaning}</p>
+                  </div>
+
+                  {/* Audio Sample Button */}
+                  <button
+                    className="btn btn-sm btn-outline-primary rounded-pill px-4 py-2 mx-auto mb-4 fw-bold"
+                    onClick={() => handlePronounce(currentVocab.word, 0.85)}
+                  >
+                    🔊 Nghe phát âm mẫu
+                  </button>
+
+                  {/* Big Microphone Recording Button */}
+                  <div className="mb-4">
+                    <button
+                      className={`mic-record-btn mx-auto ${isListeningSpeech ? 'recording' : ''}`}
+                      onClick={() => handleStartSpeechPractice(currentVocab.word)}
+                      title="Bấm để bắt đầu nói"
+                    >
+                      <span style={{ fontSize: '2.2rem' }}>🎙️</span>
+                    </button>
+                    <small className="text-muted d-block mt-2 fw-bold">
+                      {isListeningSpeech ? '🔴 Đang lắng nghe... Hãy nói ngay!' : 'Chạm vào Micro để đọc'}
+                    </small>
+                  </div>
+
+                  {/* Live Speech Recognition Transcript */}
+                  {speechResultText && (
+                    <div className="alert alert-light border rounded-pill py-2 px-3 small mb-3">
+                      {speechResultText}
+                    </div>
+                  )}
+
+                  {/* Pronunciation Score Box */}
+                  {pronunciationScore && (
+                    <div className={`pronunciation-score-box mb-3 ${pronunciationScore.score >= 85 ? 'score-excellent' : pronunciationScore.score >= 70 ? 'score-good' : 'score-retry'}`}>
+                      <div className="d-flex align-items-center justify-content-center gap-2 mb-1">
+                        <span className="fs-3">{pronunciationScore.score >= 85 ? '🌟' : '🎯'}</span>
+                        <h3 className="fw-bolder mb-0">Độ chuẩn xác: {pronunciationScore.score}%</h3>
+                      </div>
+                      <p className="mb-1 fw-bold">{pronunciationScore.feedback}</p>
+                      {pronunciationScore.endingSoundAlert && (
+                        <div className="small text-danger fw-bold mt-1">
+                          ⚠️ {pronunciationScore.endingSoundAlert}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="d-flex justify-content-center gap-2">
+                    <button
+                      className="btn btn-duo btn-duo-outline px-4"
+                      onClick={() => {
+                        setPronunciationScore(null);
+                        setSpeechResultText('');
+                        setCurrentVocabIndex((prev) => (prev + 1) % filteredVocabList.length);
+                      }}
+                    >
+                      Luyện từ tiếp theo →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: TRỢ LÝ AI ĐÀM THOẠI NHẬP VAI (AI ROLEPLAY CHAT) */}
+            {activeTab === 'ai_chat' && (
+              <div className="mx-auto" style={{ maxWidth: '680px' }}>
+                <div className="text-center mb-4">
+                  <span className="badge bg-purple-subtle text-primary px-3 py-1 rounded-pill fw-bold mb-2">
+                    🤖 AI CONVERSATION PARTNER
+                  </span>
+                  <h2 className="fw-bolder mb-1">Trợ Lý AI Đàm Thoại Nhập Vai</h2>
+                  <p className="text-muted small">
+                    Trò chuyện tự do với gia sư AI theo tình huống thực tế. Có kèm phát âm bản ngữ và nhận xét ngữ pháp tức thì!
+                  </p>
+                </div>
+
+                {/* Scenario Selector */}
+                <div className="d-flex gap-2 overflow-auto pb-2 mb-3">
+                  {AI_SCENARIOS.map((sc) => (
+                    <button
+                      key={sc.id}
+                      className={`btn btn-sm rounded-pill px-3 py-2 text-nowrap fw-bold ${selectedScenarioId === sc.id ? 'btn-primary' : 'btn-outline-secondary'}`}
+                      onClick={() => handleSelectScenario(sc)}
+                    >
+                      <span>{sc.icon}</span> {sc.title}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Scenario Context Banner */}
+                <div className="alert alert-info py-2 px-3 rounded-4 small mb-3">
+                  <strong>Bối cảnh:</strong> {activeScenario.context}
+                </div>
+
+                {/* Chat Window */}
+                <div className="ai-chat-window mb-3 shadow-sm">
+                  {chatMessages.map((msg) => (
+                    <div key={msg.id} className={msg.sender === 'ai' ? 'ai-bubble-ai' : 'ai-bubble-user'}>
+                      <div className="d-flex justify-content-between align-items-center mb-1">
+                        <strong className="small">{msg.sender === 'ai' ? `🤖 ${activeScenario.character}` : '👤 Bạn'}</strong>
+                        {msg.sender === 'ai' && (
+                          <button
+                            className="btn btn-sm btn-light p-1 rounded-circle"
+                            onClick={() => handlePronounce(msg.text, 0.9)}
+                            title="Nghe AI đọc câu này"
+                          >
+                            🔊
+                          </button>
+                        )}
+                      </div>
+                      <div className="fs-6">{msg.text}</div>
+                      {msg.coachTip && (
+                        <div className="mt-2 pt-2 border-top small text-muted fst-italic">
+                          {msg.coachTip}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
 
-                <button
-                  className="btn btn-duo btn-duo-outline mt-3 mx-auto px-4"
-                  onClick={() => {
-                    setQuizResult(null);
-                    setSelectedAnswers({});
-                  }}
-                >
-                  Làm lại bài kiểm tra 🔄
-                </button>
+                {/* Suggested Quick Replies */}
+                <div className="mb-3">
+                  <small className="fw-bold text-muted d-block mb-2">Gợi ý câu trả lời nhanh:</small>
+                  <div className="d-flex flex-wrap gap-2">
+                    {activeScenario.quickReplies.map((reply, i) => (
+                      <button
+                        key={i}
+                        className="ai-suggest-chip"
+                        onClick={() => handleSendAiChatMessage(reply)}
+                      >
+                        💬 "{reply}"
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Chat Input Box */}
+                <div className="input-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control rounded-start-pill px-3"
+                    placeholder="Gõ tin nhắn tiếng Anh để trò chuyện với AI..."
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleSendAiChatMessage();
+                    }}
+                  />
+                  <button
+                    className="btn btn-duo btn-duo-green rounded-end-pill px-4"
+                    onClick={() => handleSendAiChatMessage()}
+                    disabled={!chatInput.trim()}
+                  >
+                    Gửi tin 🚀
+                  </button>
+                </div>
               </div>
             )}
 
-            {!quizResult && quiz.questions && (
-              <div className="space-y-4">
-                {quiz.questions.map((q, idx) => (
-                  <div key={q.id} className="card border-0 shadow-sm rounded-4 p-4 bg-white mb-3">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="badge bg-light text-primary border rounded-pill px-3 py-1 fw-bold">
-                        Câu hỏi {idx + 1}
-                      </span>
-                      <small className="text-muted fw-bold">1 điểm</small>
+            {/* TAB 4: LUYỆN NGHE CHÍNH TẢ (DICTATION - ẨN CHỮ) */}
+            {activeTab === 'spell' && currentVocab && (
+              <div className="mx-auto" style={{ maxWidth: '520px' }}>
+                <div className="text-center mb-4">
+                  <span className="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill fw-bold mb-2">
+                    🎧 LUYỆN TAI BẢN NGỮ
+                  </span>
+                  <h2 className="fw-bolder mb-1">Luyện Nghe & Viết Chính Tả</h2>
+                  <p className="text-muted small">
+                    Chỉ lắng nghe âm thanh và gõ lại từ vựng. Nghĩa và phiên âm đã được ẩn hoàn toàn để rèn luyện phản xạ nghe thật!
+                  </p>
+                </div>
+
+                <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white mb-3">
+                  <button
+                    className={`audio-play-btn mx-auto mb-3 ${isSpeaking ? 'speaker-active' : ''}`}
+                    style={{ width: '84px', height: '84px' }}
+                    onClick={() => handlePronounce(currentVocab.word, listenSpeed)}
+                    title="Bấm để nghe phát âm"
+                  >
+                    <span style={{ fontSize: '2.4rem' }}>🔊</span>
+                  </button>
+
+                  <div className="d-flex justify-content-center gap-2 mb-3">
+                    <button
+                      type="button"
+                      className={`audio-speed-btn ${listenSpeed === 0.9 ? 'active' : ''}`}
+                      onClick={() => {
+                        setListenSpeed(0.9);
+                        handlePronounce(currentVocab.word, 0.9);
+                      }}
+                    >
+                      ⚡ Bình thường (1.0x)
+                    </button>
+                    <button
+                      type="button"
+                      className={`audio-speed-btn ${listenSpeed === 0.65 ? 'active' : ''}`}
+                      onClick={() => {
+                        setListenSpeed(0.65);
+                        handlePronounce(currentVocab.word, 0.65);
+                      }}
+                    >
+                      🐢 Chậm (0.65x)
+                    </button>
+                  </div>
+
+                  {!showListenHint && spellFeedback === 'none' && (
+                    <div className="mb-3">
+                      <button
+                        className="btn btn-sm btn-link text-muted text-decoration-none"
+                        onClick={() => {
+                          setShowListenHint(true);
+                          deductXp(5);
+                        }}
+                        style={{ fontSize: '0.8rem' }}
+                      >
+                        💡 Cần gợi ý chữ cái đầu? (-5 XP)
+                      </button>
                     </div>
+                  )}
 
-                    <h5 className="fw-bold text-dark mb-3">{q.prompt}</h5>
+                  {showListenHint && spellFeedback === 'none' && (
+                    <div className="alert alert-secondary py-2 px-3 small rounded-pill mb-3">
+                      Gợi ý: Bắt đầu bằng chữ <strong>"{currentVocab.word[0].toUpperCase()}"</strong> ({currentVocab.word.length} chữ cái)
+                    </div>
+                  )}
 
-                    <div className="d-flex flex-column gap-2">
-                      {q.options.map((opt) => {
-                        const isSelected = selectedAnswers[q.id] === opt.option_key;
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg text-center fw-bold rounded-pill"
+                      placeholder="Gõ từ tiếng Anh bạn nghe được..."
+                      value={spellInput}
+                      onChange={(e) => {
+                        setSpellInput(e.target.value);
+                        setSpellFeedback('none');
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSpellCheck();
+                      }}
+                      autoFocus
+                    />
+                  </div>
+
+                  {spellFeedback === 'correct' && (
+                    <div className="alert alert-success rounded-4 text-start p-3 mb-3">
+                      <div className="d-flex align-items-center gap-2 mb-2">
+                        <span className="fs-4">🎉</span>
+                        <strong className="fs-5 text-success">CHÍNH XÁC! (+20 XP)</strong>
+                      </div>
+                      <div>
+                        Từ bạn vừa nghe: <strong className="fs-5">{currentVocab.word}</strong> <span className="text-muted">{currentVocab.ipa}</span>
+                      </div>
+                      <div className="text-success-emphasis fw-bold mt-1">
+                        👉 Nghĩa: {currentVocab.meanings[0]?.meaning}
+                      </div>
+                    </div>
+                  )}
+
+                  {spellFeedback === 'wrong' && (
+                    <div className="alert alert-danger rounded-4 text-start p-3 mb-3">
+                      <div className="d-flex align-items-center gap-2 mb-2">
+                        <span className="fs-4">❌</span>
+                        <strong className="fs-5 text-danger">Chưa chính xác rồi!</strong>
+                      </div>
+                      <div>
+                        Đáp án đúng là: <strong className="fs-5">{currentVocab.word}</strong> <span className="text-muted">{currentVocab.ipa}</span>
+                      </div>
+                      <div className="text-danger-emphasis fw-bold mt-1">
+                        👉 Nghĩa: {currentVocab.meanings[0]?.meaning}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="d-flex gap-2 justify-content-center">
+                    {spellFeedback === 'none' ? (
+                      <button
+                        className="btn btn-duo btn-duo-green px-4 py-2"
+                        onClick={handleSpellCheck}
+                        disabled={!spellInput.trim()}
+                      >
+                        Kiểm tra đáp án 🚀
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-duo btn-duo-purple px-4 py-2"
+                        onClick={handleNextSpellWord}
+                      >
+                        Từ tiếp theo →
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 5: VIẾT NHẬT KÝ & AI CHẤM ĐIỂM (JOURNAL) */}
+            {activeTab === 'writing' && (
+              <div className="mx-auto" style={{ maxWidth: '720px' }}>
+                <div className="text-center mb-4">
+                  <span className="badge bg-purple-subtle text-primary px-3 py-1 rounded-pill fw-bold mb-2">
+                    ✍️ RÈN LUYỆN KỸ NĂNG VIẾT
+                  </span>
+                  <h2 className="fw-bolder mb-1">Nhật Ký & Viết Văn Theo Lộ Trình</h2>
+                  <p className="text-muted small">
+                    Chọn chủ đề phù hợp với cấp độ của bạn, vận dụng từ vựng đã học và nhận phản hồi chấm điểm AI ngay lập tức!
+                  </p>
+                </div>
+
+                <div className="d-flex gap-2 overflow-auto pb-2 mb-4">
+                  {WRITING_PROMPTS.map((p) => (
+                    <button
+                      key={p.id}
+                      className={`btn btn-sm rounded-pill px-3 py-2 text-nowrap fw-bold ${selectedPromptId === p.id ? 'btn-primary' : 'btn-outline-secondary'}`}
+                      onClick={() => {
+                        setSelectedPromptId(p.id);
+                        setJournalFeedback(null);
+                      }}
+                    >
+                      <span className="badge bg-light text-dark me-1">{p.level}</span>
+                      {p.title.split('(')[0]}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-bold">
+                      {activePrompt.level}
+                    </span>
+                    <span className="small text-muted fw-bold">
+                      Yêu cầu: Tối thiểu {activePrompt.minWords} từ
+                    </span>
+                  </div>
+
+                  <h4 className="fw-bolder text-dark mb-2">{activePrompt.title}</h4>
+                  <p className="text-muted mb-3">{activePrompt.instructions}</p>
+
+                  <div className="mb-3">
+                    <span className="small fw-bold text-muted d-block mb-2">
+                      Từ vựng mục tiêu cần áp dụng (Gõ vào bài để sáng xanh ✅):
+                    </span>
+                    <div className="d-flex flex-wrap gap-2">
+                      {activePrompt.targetKeywords.map((kw) => {
+                        const isUsed = matchedKeywords.includes(kw);
                         return (
-                          <button
-                            key={opt.id}
-                            className={`quiz-option-btn ${isSelected ? 'selected' : ''}`}
-                            onClick={() => {
-                              setSelectedAnswers({ ...selectedAnswers, [q.id]: opt.option_key });
-                              playSoundEffect('flip');
-                            }}
-                          >
-                            <span className="badge bg-light text-dark border px-2 py-1 rounded-circle">
-                              {opt.option_key}
-                            </span>
-                            <span>{opt.content}</span>
-                          </button>
+                          <span key={kw} className={`keyword-chip ${isUsed ? 'matched' : ''}`}>
+                            {isUsed ? '✅ ' : '○ '}
+                            {kw}
+                          </span>
                         );
                       })}
                     </div>
                   </div>
-                ))}
 
-                <button
-                  className="btn btn-duo btn-duo-green w-100 py-3 fs-5"
-                  onClick={async () => {
-                    try {
-                      const res = await submitQuiz(quiz.id, selectedAnswers);
-                      setQuizResult(res);
-                      if (res.passed) {
-                        playSoundEffect('win');
-                        addXp(50);
-                      } else {
-                        playSoundEffect('wrong');
-                      }
-                    } catch {
-                      let earned = 0;
-                      const results = (quiz.questions || []).map((q) => {
-                        const userChoice = selectedAnswers[q.id] || '';
-                        const isCorrect = (q.id === 101 && userChoice === 'B') ||
-                                          (q.id === 102 && userChoice === 'B') ||
-                                          (q.id === 103 && userChoice === 'A');
-                        if (isCorrect) earned += 1;
-                        return {
-                          question_id: q.id,
-                          prompt: q.prompt,
-                          user_choice: userChoice || 'Chưa chọn',
-                          correct_choice: q.id === 101 ? 'B' : q.id === 102 ? 'B' : 'A',
-                          is_correct: isCorrect,
-                          explanation: q.explanation,
-                          points: isCorrect ? 1 : 0
-                        };
-                      });
+                  <div className="mb-3">
+                    <textarea
+                      className="form-control rounded-4 p-3 fs-6"
+                      rows={6}
+                      placeholder="Bắt đầu viết nhật ký bằng tiếng Anh của bạn tại đây..."
+                      value={journalText}
+                      onChange={(e) => setJournalText(e.target.value)}
+                    />
+                  </div>
 
-                      const total = quiz.questions?.length || 3;
-                      const percent = Math.round((earned / total) * 100);
-                      const passed = percent >= quiz.pass_percent;
-                      setQuizResult({
-                        quiz_id: quiz.id,
-                        title: quiz.title,
-                        earned_points: earned,
-                        total_points: total,
-                        score_percent: percent,
-                        pass_percent: quiz.pass_percent,
-                        passed,
-                        results
-                      });
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <div className="small fw-bold">
+                      Số từ đã viết: <span className={journalWordCount >= activePrompt.minWords ? 'text-success' : 'text-danger'}>{journalWordCount}</span> / {activePrompt.minWords} từ
+                    </div>
 
-                      if (passed) {
-                        playSoundEffect('win');
-                        addXp(50);
-                      }
-                    }
-                  }}
-                  disabled={Object.keys(selectedAnswers).length === 0}
-                >
-                  Nộp bài & Chấm điểm tức thì 🎯
-                </button>
+                    <div className="small text-muted">
+                      Từ vựng mục tiêu: {matchedKeywords.length} / {activePrompt.targetKeywords.length} từ
+                    </div>
+                  </div>
+
+                  {journalFeedback && (
+                    <div className="alert alert-success rounded-4 p-3 mb-3">
+                      <div className="fw-bold mb-1">🤖 Phân tích & Đánh giá của AI Tutor:</div>
+                      <div>{journalFeedback}</div>
+                    </div>
+                  )}
+
+                  <button
+                    className="btn btn-duo btn-duo-green w-100 py-3 fs-5"
+                    onClick={handleSubmitJournal}
+                    disabled={journalWordCount === 0}
+                  >
+                    Nộp bài nhật ký & Nhờ AI chấm điểm (+50 XP) 🚀
+                  </button>
+                </div>
+
+                <div className="mt-5">
+                  <h4 className="fw-bolder mb-3">📖 Lịch Sử Nhật Ký Của Bạn ({savedEntries.length})</h4>
+
+                  <div className="d-flex flex-column gap-3">
+                    {savedEntries.map((entry) => (
+                      <div key={entry.id} className="journal-entry-card">
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="badge bg-light text-primary border rounded-pill px-2 py-1 small fw-bold">
+                            {entry.level}
+                          </span>
+                          <small className="text-muted">{entry.createdAt}</small>
+                        </div>
+
+                        <h5 className="fw-bold text-dark mb-2">{entry.title}</h5>
+
+                        <p className="p-3 rounded-3 bg-light text-dark mb-2" style={{ whiteSpace: 'pre-wrap' }}>
+                          "{entry.body}"
+                        </p>
+
+                        <div className="d-flex justify-content-between align-items-center small text-muted">
+                          <span>Độ dài: {entry.wordCount} từ</span>
+                          <span className="text-success fw-bold">
+                            Đã áp dụng: {entry.matchedKeywords.join(', ')}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
-          </div>
-        )}
 
-        {/* TAB 6: SỔ TỪ VỰNG */}
-        {activeTab === 'deck' && (
-          <div>
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+            {/* TAB 6: MINIGAME GHÉP TỪ */}
+            {activeTab === 'match' && (
+              <div className="mx-auto" style={{ maxWidth: '640px' }}>
+                <div className="text-center mb-4">
+                  <h2 className="fw-bolder mb-1">🎮 Minigame Ghép Từ Siêu Tốc</h2>
+                  <p className="text-muted small">
+                    Nối từ tiếng Anh với nghĩa tiếng Việt tương ứng càng nhanh càng tốt!
+                  </p>
+                </div>
+
+                {matchGameWon ? (
+                  <div className="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+                    <span style={{ fontSize: '4rem' }} className="mb-2">🏆</span>
+                    <h2 className="fw-bolder text-success mb-2">XUẤT SẮC! BẠN ĐÃ CHIẾN THẮNG!</h2>
+                    <p className="text-muted mb-4">
+                      Bạn đã ghép chính xác toàn bộ cặp từ vựng! Thưởng <strong>+75 XP</strong> và <strong>+5 💎</strong>.
+                    </p>
+                    <button className="btn btn-duo btn-duo-green px-5 py-3 fs-5 mx-auto" onClick={initMatchGame}>
+                      🔁 Chơi ván mới
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <span className="fw-bold text-muted">
+                        Tiến độ: {matchedIds.size / 2} / {matchCards.length / 2} cặp
+                      </span>
+                      <button className="btn btn-sm btn-outline-secondary rounded-pill px-3" onClick={initMatchGame}>
+                        Trộn lại 🎲
+                      </button>
+                    </div>
+
+                    <div className="row g-3">
+                      {matchCards.map((card) => {
+                        const isSelected = selectedCards.some((c) => c.id === card.id);
+                        const isMatched = matchedIds.has(card.id);
+                        const isWrong = wrongPair.includes(card.id);
+
+                        return (
+                          <div key={card.id} className="col-6">
+                            <div
+                              className={`match-card ${isSelected ? 'selected' : ''} ${isMatched ? 'matched' : ''} ${isWrong ? 'wrong shake-animation' : ''}`}
+                              onClick={() => handleMatchCardClick(card)}
+                            >
+                              <div className="py-2">
+                                {card.text}
+                              </div>
+                              {card.type === 'en' && (
+                                <small className="text-muted d-block fw-normal" style={{ fontSize: '0.75rem' }}>
+                                  🔊 Chạm để nghe
+                                </small>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* TAB 7: TRẮC NGHIỆM QUIZ */}
+            {activeTab === 'quiz' && (
+              <div className="mx-auto" style={{ maxWidth: '680px' }}>
+                <div className="text-center mb-4">
+                  <h2 className="fw-bolder mb-1">{quiz.title}</h2>
+                  <p className="text-muted small">{quiz.description}</p>
+                </div>
+
+                {quizResult && (
+                  <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white mb-4">
+                    <span style={{ fontSize: '3.5rem' }}>{quizResult.passed ? '🎉' : '💪'}</span>
+                    <h3 className={`fw-bolder mb-2 ${quizResult.passed ? 'text-success' : 'text-warning'}`}>
+                      {quizResult.passed ? 'Chúc mừng! Bạn đã vượt qua bài test!' : 'Cố lên! Hãy ôn lại từ vựng nhé!'}
+                    </h3>
+                    <p className="fs-5 fw-bold text-dark mb-3">
+                      Điểm số: {quizResult.earned_points} / {quizResult.total_points} ({quizResult.score_percent}%)
+                    </p>
+
+                    <div className="text-start mt-3">
+                      <h6 className="fw-bold text-muted mb-3">Chi tiết từng câu hỏi:</h6>
+                      {quizResult.results.map((res, i) => (
+                        <div key={i} className={`p-3 rounded-4 mb-2 border ${res.is_correct ? 'bg-success-subtle border-success' : 'bg-danger-subtle border-danger'}`}>
+                          <div className="fw-bold mb-1">
+                            Câu {i + 1}: {res.prompt}
+                          </div>
+                          <div className="small">
+                            Đáp án bạn chọn: <strong>{res.user_choice}</strong> | Đáp án đúng: <strong>{res.correct_choice}</strong>
+                          </div>
+                          <div className="small text-muted mt-1 fst-italic">
+                            💡 Giải thích: {res.explanation}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      className="btn btn-duo btn-duo-outline mt-3 mx-auto px-4"
+                      onClick={() => {
+                        setQuizResult(null);
+                        setSelectedAnswers({});
+                      }}
+                    >
+                      Làm lại bài kiểm tra 🔄
+                    </button>
+                  </div>
+                )}
+
+                {!quizResult && quiz.questions && (
+                  <div className="space-y-4">
+                    {quiz.questions.map((q, idx) => (
+                      <div key={q.id} className="card border-0 shadow-sm rounded-4 p-4 bg-white mb-3">
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                          <span className="badge bg-light text-primary border rounded-pill px-3 py-1 fw-bold">
+                            Câu hỏi {idx + 1}
+                          </span>
+                          <small className="text-muted fw-bold">1 điểm</small>
+                        </div>
+
+                        <h5 className="fw-bold text-dark mb-3">{q.prompt}</h5>
+
+                        <div className="d-flex flex-column gap-2">
+                          {q.options.map((opt) => {
+                            const isSelected = selectedAnswers[q.id] === opt.option_key;
+                            return (
+                              <button
+                                key={opt.id}
+                                className={`quiz-option-btn ${isSelected ? 'selected' : ''}`}
+                                onClick={() => {
+                                  setSelectedAnswers({ ...selectedAnswers, [q.id]: opt.option_key });
+                                  playSoundEffect('flip');
+                                }}
+                              >
+                                <span className="badge bg-light text-dark border px-2 py-1 rounded-circle">
+                                  {opt.option_key}
+                                </span>
+                                <span>{opt.content}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+
+                    <button
+                      className="btn btn-duo btn-duo-green w-100 py-3 fs-5"
+                      onClick={async () => {
+                        try {
+                          const res = await submitQuiz(quiz.id, selectedAnswers);
+                          setQuizResult(res);
+                          if (res.passed) {
+                            playSoundEffect('win');
+                            addXp(50);
+                          } else {
+                            playSoundEffect('wrong');
+                          }
+                        } catch {
+                          let earned = 0;
+                          const results = (quiz.questions || []).map((q) => {
+                            const userChoice = selectedAnswers[q.id] || '';
+                            const isCorrect = (q.id === 101 && userChoice === 'B') ||
+                                              (q.id === 102 && userChoice === 'B') ||
+                                              (q.id === 103 && userChoice === 'A');
+                            if (isCorrect) earned += 1;
+                            return {
+                              question_id: q.id,
+                              prompt: q.prompt,
+                              user_choice: userChoice || 'Chưa chọn',
+                              correct_choice: q.id === 101 ? 'B' : q.id === 102 ? 'B' : 'A',
+                              is_correct: isCorrect,
+                              explanation: q.explanation,
+                              points: isCorrect ? 1 : 0
+                            };
+                          });
+
+                          const total = quiz.questions?.length || 3;
+                          const percent = Math.round((earned / total) * 100);
+                          const passed = percent >= quiz.pass_percent;
+                          setQuizResult({
+                            quiz_id: quiz.id,
+                            title: quiz.title,
+                            earned_points: earned,
+                            total_points: total,
+                            score_percent: percent,
+                            pass_percent: quiz.pass_percent,
+                            passed,
+                            results
+                          });
+
+                          if (passed) {
+                            playSoundEffect('win');
+                            addXp(50);
+                          }
+                        }
+                      }}
+                      disabled={Object.keys(selectedAnswers).length === 0}
+                    >
+                      Nộp bài & Chấm điểm tức thì 🎯
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* TAB 8: SỔ TỪ VỰNG CÓ HÌNH ẢNH */}
+            {activeTab === 'deck' && (
               <div>
-                <h3 className="fw-bolder mb-1">📚 Kho Từ Vựng Cá Nhân</h3>
-                <p className="text-muted small mb-0">Tra cứu, nghe phát âm và đánh dấu từ vựng cần ôn tập</p>
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                  <div>
+                    <h3 className="fw-bolder mb-1">📚 Kho Từ Vựng Trực Quan</h3>
+                    <p className="text-muted small mb-0">Tra cứu, nghe phát âm và đánh dấu từ vựng cần ôn tập</p>
+                  </div>
+
+                  <div style={{ maxWidth: '320px', width: '100%' }}>
+                    <input
+                      type="text"
+                      className="form-control rounded-pill px-3 shadow-sm"
+                      placeholder="🔍 Tìm kiếm từ hoặc nghĩa..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="row g-3">
+                  {filteredVocabList.map((item) => (
+                    <div key={item.id} className="col-12 col-md-6">
+                      <div className="vocab-deck-card h-100 d-flex flex-column justify-content-between">
+                        <div>
+                          <div className="d-flex justify-content-between align-items-center mb-2">
+                            <span className={`badge px-2 py-1 rounded-pill ${getPosBadgeColor(item.part_of_speech)}`}>
+                              {item.part_of_speech}
+                            </span>
+
+                            <div className="d-flex gap-1">
+                              <button
+                                className="btn btn-sm btn-light rounded-circle text-primary p-1"
+                                onClick={() => handlePronounce(item.word)}
+                                title="Nghe phát âm"
+                              >
+                                🔊
+                              </button>
+                              <button
+                                className="btn btn-sm btn-light rounded-circle text-warning p-1"
+                                onClick={() => toggleBookmark(item.id)}
+                                title="Lưu từ yêu thích"
+                              >
+                                {bookmarkedIds.has(item.id) ? '⭐' : '☆'}
+                              </button>
+                            </div>
+                          </div>
+
+                          {item.image_url && (
+                            <img
+                              src={item.image_url}
+                              alt={item.word}
+                              style={{ width: '100%', height: '110px', objectFit: 'cover', borderRadius: '0.75rem', marginBottom: '0.5rem' }}
+                              loading="lazy"
+                            />
+                          )}
+
+                          <h4 className="fw-bolder text-dark mb-1">{item.word}</h4>
+                          <div className="text-muted small mb-2">{item.ipa}</div>
+
+                          <p className="fw-semibold text-success mb-2">
+                            👉 {item.meanings[0]?.meaning}
+                          </p>
+
+                          {item.examples && item.examples[0] && (
+                            <div className="p-2 rounded bg-light small text-muted">
+                              "{item.examples[0].sentence}"
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
+            )}
 
-              <div style={{ maxWidth: '320px', width: '100%' }}>
-                <input
-                  type="text"
-                  className="form-control rounded-pill px-3 shadow-sm"
-                  placeholder="🔍 Tìm kiếm từ hoặc nghĩa..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-            </div>
+            {/* TAB 9: CLOUD BACKEND & DATABASE STATUS */}
+            {activeTab === 'health' && (
+              <div className="mx-auto" style={{ maxWidth: '560px' }}>
+                <div className="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
+                  <span style={{ fontSize: '3rem' }} className="mb-2">☁️</span>
+                  <h4 className="fw-bolder mb-3">Trạng thái Hạ Tầng & Dữ Liệu</h4>
 
-            <div className="row g-3">
-              {filteredVocabulary.map((item) => (
-                <div key={item.id} className="col-12 col-md-6">
-                  <div className="vocab-deck-card h-100 d-flex flex-column justify-content-between">
-                    <div>
-                      <div className="d-flex justify-content-between align-items-center mb-2">
-                        <span className={`badge px-2 py-1 rounded-pill ${getPosBadgeColor(item.part_of_speech)}`}>
-                          {item.part_of_speech}
-                        </span>
-
-                        <div className="d-flex gap-1">
-                          <button
-                            className="btn btn-sm btn-light rounded-circle text-primary p-1"
-                            onClick={() => handlePronounce(item.word)}
-                            title="Nghe phát âm"
-                          >
-                            🔊
-                          </button>
-                          <button
-                            className="btn btn-sm btn-light rounded-circle text-warning p-1"
-                            onClick={() => toggleBookmark(item.id)}
-                            title="Lưu từ yêu thích"
-                          >
-                            {bookmarkedIds.has(item.id) ? '⭐' : '☆'}
-                          </button>
+                  {healthLoading ? (
+                    <div className="py-4 text-muted">Đang kiểm tra kết nối...</div>
+                  ) : health ? (
+                    <div className="text-start">
+                      <div className="alert alert-success rounded-4 d-flex align-items-center gap-3 mb-3">
+                        <span className="fs-3">✅</span>
+                        <div>
+                          <div className="fw-bold">Backend & Database hoạt động tốt!</div>
+                          <small>Dịch vụ: {health.service} | Neon PostgreSQL: {health.database}</small>
                         </div>
                       </div>
 
-                      <h4 className="fw-bolder text-dark mb-1">{item.word}</h4>
-                      <div className="text-muted small mb-2">{item.ipa}</div>
-
-                      <p className="fw-semibold text-success mb-2">
-                        👉 {item.meanings[0]?.meaning}
-                      </p>
-
-                      {item.examples && item.examples[0] && (
-                        <div className="p-2 rounded bg-light small text-muted">
-                          "{item.examples[0].sentence}"
-                        </div>
-                      )}
+                      <ul className="list-group rounded-4 mb-3">
+                        <li className="list-group-item d-flex justify-content-between">
+                          <span>Backend REST API</span>
+                          <strong className="text-success">Laravel 12 (Docker on Render)</strong>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between">
+                          <span>Database</span>
+                          <strong className="text-success">Neon Serverless PostgreSQL (SSL)</strong>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between">
+                          <span>Frontend Client</span>
+                          <strong className="text-success">React 19 + Vite (Render Static Site)</strong>
+                        </li>
+                        <li className="list-group-item d-flex justify-content-between">
+                          <span>Chi phí vận hành</span>
+                          <strong className="text-primary">0 VNĐ / Tháng (Miễn phí 100%)</strong>
+                        </li>
+                      </ul>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* TAB 7: CLOUD BACKEND & DATABASE STATUS */}
-        {activeTab === 'health' && (
-          <div className="mx-auto" style={{ maxWidth: '560px' }}>
-            <div className="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
-              <span style={{ fontSize: '3rem' }} className="mb-2">☁️</span>
-              <h4 className="fw-bolder mb-3">Trạng thái Hạ Tầng & Dữ Liệu</h4>
-
-              {healthLoading ? (
-                <div className="py-4 text-muted">Đang kiểm tra kết nối...</div>
-              ) : health ? (
-                <div className="text-start">
-                  <div className="alert alert-success rounded-4 d-flex align-items-center gap-3 mb-3">
-                    <span className="fs-3">✅</span>
-                    <div>
-                      <div className="fw-bold">Backend & Database hoạt động tốt!</div>
-                      <small>Dịch vụ: {health.service} | Neon PostgreSQL: {health.database}</small>
+                  ) : (
+                    <div className="alert alert-warning rounded-4 text-start">
+                      <div className="fw-bold mb-1">Lưu ý Cold Start Render Free Tier:</div>
+                      <small>
+                        {healthError || 'Máy chủ miễn phí của Render sẽ vào chế độ ngủ sau 15 phút không có request và mất ~30 giây để thức dậy.'}
+                      </small>
                     </div>
-                  </div>
+                  )}
 
-                  <ul className="list-group rounded-4 mb-3">
-                    <li className="list-group-item d-flex justify-content-between">
-                      <span>Backend REST API</span>
-                      <strong className="text-success">Laravel 12 (Docker on Render)</strong>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                      <span>Database</span>
-                      <strong className="text-success">Neon Serverless PostgreSQL (SSL)</strong>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                      <span>Frontend Client</span>
-                      <strong className="text-success">React 19 + Vite (Render Static Site)</strong>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between">
-                      <span>Chi phí vận hành</span>
-                      <strong className="text-primary">0 VNĐ / Tháng (Miễn phí 100%)</strong>
-                    </li>
-                  </ul>
+                  <button
+                    className="btn btn-duo btn-duo-outline w-100 mt-2"
+                    onClick={fetchBackendHealth}
+                    disabled={healthLoading}
+                  >
+                    Kiểm tra lại kết nối 🔄
+                  </button>
                 </div>
-              ) : (
-                <div className="alert alert-warning rounded-4 text-start">
-                  <div className="fw-bold mb-1">Lưu ý Cold Start Render Free Tier:</div>
-                  <small>
-                    {healthError || 'Máy chủ miễn phí của Render sẽ vào chế độ ngủ sau 15 phút không có request và mất ~30 giây để thức dậy.'}
-                  </small>
-                </div>
-              )}
-
-              <button
-                className="btn btn-duo btn-duo-outline w-100 mt-2"
-                onClick={fetchBackendHealth}
-                disabled={healthLoading}
-              >
-                Kiểm tra lại kết nối 🔄
-              </button>
-            </div>
-          </div>
+              </div>
+            )}
+          </>
         )}
-        </>
-      )}
       </main>
 
       {/* 4. AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) */}

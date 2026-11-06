@@ -91,6 +91,8 @@ export interface VocabularyItem {
   word: string;
   ipa: string;
   part_of_speech: string;
+  topic?: string;
+  image_url?: string;
   meanings: Array<{ meaning: string; usage_note?: string }>;
   examples: Array<{ sentence: string; translation?: string }>;
 }
