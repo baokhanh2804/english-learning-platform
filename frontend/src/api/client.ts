@@ -174,3 +174,60 @@ export const submitQuiz = async (id: number, answers: Record<number, string>): P
   const res = await apiClient.post<QuizSubmissionResult>(`/quizzes/${id}/submit`, { answers });
   return res.data;
 };
+
+// ==========================================
+// Authentication APIs
+// ==========================================
+export interface AuthUser {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface AuthResponse {
+  message: string;
+  user: AuthUser;
+  token: string;
+}
+
+export const registerUser = async (data: { name: string; email: string; password: string }): Promise<AuthResponse> => {
+  const res = await apiClient.post<AuthResponse>('/register', data);
+  if (res.data.token) {
+    localStorage.setItem('auth_token', res.data.token);
+    localStorage.setItem('auth_user', JSON.stringify(res.data.user));
+  }
+  return res.data;
+};
+
+export const loginUser = async (data: { email: string; password: string }): Promise<AuthResponse> => {
+  const res = await apiClient.post<AuthResponse>('/login', data);
+  if (res.data.token) {
+    localStorage.setItem('auth_token', res.data.token);
+    localStorage.setItem('auth_user', JSON.stringify(res.data.user));
+  }
+  return res.data;
+};
+
+export const logoutUser = async (): Promise<void> => {
+  try {
+    await apiClient.post('/logout');
+  } catch {
+    // Ignore error if token expired or unreachable
+  } finally {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+  }
+};
+
+export const getCurrentUser = async (): Promise<AuthUser | null> => {
+  try {
+    const res = await apiClient.get<{ user: AuthUser }>('/me');
+    if (res.data.user) {
+      localStorage.setItem('auth_user', JSON.stringify(res.data.user));
+      return res.data.user;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};

@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import axios from 'axios';
 import {
   checkHealth,
   getVocabulary,
   getQuiz,
   submitQuiz,
+  loginUser,
+  registerUser,
+  logoutUser,
+  getCurrentUser,
   type HealthCheckResponse,
   type VocabularyItem,
   type Quiz,
   type QuizSubmissionResult,
+  type AuthUser,
 } from './api/client';
 import './App.css';
 
@@ -278,6 +284,15 @@ export default function App() {
   const [healthLoading, setHealthLoading] = useState<boolean>(false);
   const [healthError, setHealthError] = useState<string | null>(null);
 
+  // Authentication State
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const [authForm, setAuthForm] = useState({ name: '', email: '', password: '' });
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authSuccess, setAuthSuccess] = useState<string | null>(null);
+
   // Initialize Match Game
   const initMatchGame = React.useCallback(() => {
     // Pick 4 words for a fast exciting round
@@ -301,6 +316,17 @@ export default function App() {
   useEffect(() => {
     fetchBackendHealth();
 
+    // Check existing stored auth
+    const storedUser = localStorage.getItem('auth_user');
+    if (storedUser) {
+      try {
+        setCurrentUser(JSON.parse(storedUser));
+      } catch {}
+    }
+    getCurrentUser().then((user) => {
+      if (user) setCurrentUser(user);
+    });
+
     getVocabulary()
       .then((data) => {
         if (data && data.length > 0) setVocabulary(data);
@@ -313,6 +339,53 @@ export default function App() {
       })
       .catch(() => {});
   }, []);
+
+  const handleAuthSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthError(null);
+    setAuthSuccess(null);
+
+    try {
+      if (authMode === 'login') {
+        const res = await loginUser({ email: authForm.email, password: authForm.password });
+        setCurrentUser(res.user);
+        setAuthSuccess('Đăng nhập thành công! Chúc bạn học tốt!');
+        playSoundEffect('win');
+        setXp((prev) => prev + 30);
+        setTimeout(() => {
+          setShowAuthModal(false);
+          setAuthSuccess(null);
+        }, 800);
+      } else {
+        const res = await registerUser({ name: authForm.name, email: authForm.email, password: authForm.password });
+        setCurrentUser(res.user);
+        setAuthSuccess('Đăng ký tài khoản thành công! Tặng bạn +50 XP!');
+        playSoundEffect('win');
+        setXp((prev) => prev + 50);
+        setTimeout(() => {
+          setShowAuthModal(false);
+          setAuthSuccess(null);
+        }, 800);
+      }
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        setAuthError(err.response.data.message);
+      } else if (err instanceof Error) {
+        setAuthError(err.message);
+      } else {
+        setAuthError('Có lỗi xảy ra, vui lòng thử lại.');
+      }
+      playSoundEffect('wrong');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await logoutUser();
+    setCurrentUser(null);
+  };
 
   useEffect(() => {
     if (activeTab === 'match') {
@@ -496,9 +569,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* Gamification Stats Bar */}
+          {/* Gamification Stats Bar & User Auth */}
           <div className="d-flex align-items-center gap-2">
-            <div className="stat-chip stat-chip-streak" title="Chuỗi ngày học liên tục">
+            <div className="stat-chip stat-chip-streak d-none d-sm-inline-flex" title="Chuỗi ngày học liên tục">
               <span>🔥</span>
               <span>{streak}</span>
             </div>
@@ -508,15 +581,48 @@ export default function App() {
               <span>{xp}</span>
             </div>
 
-            <div className="stat-chip stat-chip-gems" title="Kim cương tích lũy">
+            <div className="stat-chip stat-chip-gems d-none d-md-inline-flex" title="Kim cương tích lũy">
               <span>💎</span>
               <span>{gems}</span>
             </div>
 
-            <div className="stat-chip stat-chip-hearts" title="Số tim còn lại">
+            <div className="stat-chip stat-chip-hearts d-none d-md-inline-flex" title="Số tim còn lại">
               <span>❤️</span>
               <span>{hearts}</span>
             </div>
+
+            {/* User Profile / Login Button */}
+            {currentUser ? (
+              <div className="d-flex align-items-center gap-2 ms-1">
+                <div className="stat-chip bg-light text-dark border px-2 py-1" title={currentUser.email}>
+                  <span>👤</span>
+                  <span className="fw-bold text-truncate" style={{ maxWidth: '100px' }}>
+                    {currentUser.name}
+                  </span>
+                </div>
+                <button
+                  className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                  onClick={handleLogout}
+                  title="Đăng xuất khỏi tài khoản"
+                  style={{ fontSize: '0.75rem', fontWeight: 700 }}
+                >
+                  Thoát
+                </button>
+              </div>
+            ) : (
+              <button
+                className="btn-duo btn-duo-green px-3 py-1 ms-1"
+                style={{ fontSize: '0.85rem' }}
+                onClick={() => {
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                  setShowAuthModal(true);
+                }}
+              >
+                <span>🔑</span>
+                <span>Đăng nhập</span>
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -1191,6 +1297,134 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* 4. AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) */}
+      {showAuthModal && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+          style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(6px)', zIndex: 9999 }}
+          onClick={() => setShowAuthModal(false)}
+        >
+          <div
+            className="card border-0 rounded-4 shadow-lg p-4 bg-white"
+            style={{ maxWidth: '420px', width: '100%', position: 'relative' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              type="button"
+              className="btn-close position-absolute top-0 end-0 m-3"
+              onClick={() => setShowAuthModal(false)}
+              aria-label="Close"
+            />
+
+            <div className="text-center mb-3">
+              <span style={{ fontSize: '2.5rem' }}>🦉</span>
+              <h4 className="fw-bolder mt-1 mb-1">
+                {authMode === 'login' ? 'Đăng nhập VocabMaster' : 'Tạo tài khoản mới'}
+              </h4>
+              <p className="text-muted small mb-0">
+                {authMode === 'login'
+                  ? 'Đăng nhập để lưu tiến độ và giữ chuỗi ngày học!'
+                  : 'Tạo tài khoản hoàn toàn miễn phí và nhận ngay +50 XP!'}
+              </p>
+            </div>
+
+            {/* Tab Switcher */}
+            <div className="d-flex rounded-pill bg-light p-1 mb-3 border">
+              <button
+                type="button"
+                className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'login' ? 'bg-white shadow-sm text-success' : 'text-muted'}`}
+                onClick={() => {
+                  setAuthMode('login');
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+              >
+                Đăng nhập
+              </button>
+              <button
+                type="button"
+                className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'register' ? 'bg-white shadow-sm text-success' : 'text-muted'}`}
+                onClick={() => {
+                  setAuthMode('register');
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+              >
+                Đăng ký mới
+              </button>
+            </div>
+
+            {authError && (
+              <div className="alert alert-danger py-2 px-3 small rounded-3 mb-3">
+                {authError}
+              </div>
+            )}
+
+            {authSuccess && (
+              <div className="alert alert-success py-2 px-3 small rounded-3 mb-3">
+                {authSuccess}
+              </div>
+            )}
+
+            <form onSubmit={handleAuthSubmit}>
+              {authMode === 'register' && (
+                <div className="mb-3 text-start">
+                  <label className="form-label small fw-bold text-muted">Họ và tên của bạn</label>
+                  <input
+                    type="text"
+                    required
+                    className="form-control rounded-3"
+                    placeholder="VD: Nguyễn Bảo Khánh"
+                    value={authForm.name}
+                    onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
+                  />
+                </div>
+              )}
+
+              <div className="mb-3 text-start">
+                <label className="form-label small fw-bold text-muted">Email</label>
+                <input
+                  type="email"
+                  required
+                  className="form-control rounded-3"
+                  placeholder="name@example.com"
+                  value={authForm.email}
+                  onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+                />
+              </div>
+
+              <div className="mb-4 text-start">
+                <label className="form-label small fw-bold text-muted">Mật khẩu</label>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  className="form-control rounded-3"
+                  placeholder="Tối thiểu 6 ký tự"
+                  value={authForm.password}
+                  onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn btn-duo btn-duo-green w-100 py-2 fs-6 mb-2"
+                disabled={authLoading}
+              >
+                {authLoading ? (
+                  <span>Đang xử lý...</span>
+                ) : authMode === 'login' ? (
+                  'Đăng nhập ngay 🚀'
+                ) : (
+                  'Tạo tài khoản (+50 XP) ✨'
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
