@@ -214,3 +214,172 @@
   border-top: 2px solid #e2e8f0;
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.03);
 }
+
+/* ==========================================================================
+   ROADMAP (Duolingo Style Learning Path)
+   ========================================================================== */
+.roadmap-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 1.5rem 0;
+}
+
+.roadmap-path-line {
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  width: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.roadmap-checkpoint {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.roadmap-checkpoint:hover {
+  transform: translateY(-3px);
+}
+
+.roadmap-node-btn {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  cursor: pointer;
+  border: 4px solid #ffffff;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.roadmap-node-btn.completed {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 0 #047857, 0 15px 25px rgba(16, 185, 129, 0.3);
+}
+
+.roadmap-node-btn.current {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 0 #3730a3, 0 15px 25px rgba(99, 102, 241, 0.35);
+  animation: current-pulse 1.8s infinite;
+}
+
+@keyframes current-pulse {
+  0% { box-shadow: 0 8px 0 #3730a3, 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  70% { box-shadow: 0 8px 0 #3730a3, 0 0 0 16px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 8px 0 #3730a3, 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+.roadmap-node-btn.locked {
+  background: #cbd5e1;
+  color: #64748b;
+  box-shadow: 0 6px 0 #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.roadmap-info-box {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 0.6rem 1.2rem;
+  margin-top: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  max-width: 240px;
+}
+
+/* ==========================================================================
+   LISTENING PRACTICE AUDIO CONTROLS
+   ========================================================================== */
+.audio-speed-btn {
+  border-radius: 2rem;
+  padding: 0.35rem 0.85rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.audio-speed-btn:hover {
+  border-color: #3b82f6;
+  color: #2563eb;
+}
+
+.audio-speed-btn.active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   WRITING / JOURNALING STYLES
+   ========================================================================== */
+.keyword-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 2px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  transition: all 0.25s ease;
+}
+
+.keyword-chip.matched {
+  background: #ecfdf5;
+  border-color: #10b981;
+  color: #065f46;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.15);
+  transform: scale(1.05);
+}
+
+.journal-entry-card {
+  border-radius: 1.25rem;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 0 #e2e8f0;
+  padding: 1.25rem;
+  transition: transform 0.15s ease;
+}
+
+.journal-entry-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   XP PENALTY & MISSED-DAY DECAY ALERT
+   ========================================================================== */
+.decay-alert-banner {
+  background: linear-gradient(90deg, #fff1f2 0%, #fee2e2 100%);
+  border: 2px solid #fca5a5;
+  border-radius: 1.25rem;
+  padding: 0.9rem 1.25rem;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
