@@ -51,11 +51,9 @@ services:
   # ============================================================================
   # 2. Frontend SPA - React 19 + TypeScript + Vite Static Site
   # ============================================================================
-  - type: web
+  - type: static
     name: english-learning-frontend
-    runtime: static
     rootDir: frontend
-    plan: free
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
     routes:
