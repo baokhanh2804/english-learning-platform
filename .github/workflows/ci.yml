@@ -1,0 +1,65 @@
+name: Monorepo CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-test:
+    name: Backend Tests (Laravel 12)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_sqlite, pdo_pgsql, pgsql, bcmath
+          coverage: none
+
+      - name: Copy .env
+        working-directory: ./backend
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Composer Dependencies
+        working-directory: ./backend
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Generate App Key
+        working-directory: ./backend
+        run: php artisan key:generate
+
+      - name: Run Migrations & Tests
+        working-directory: ./backend
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: php artisan test
+
+  frontend-build:
+    name: Frontend Build (React 19 + Vite)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install NPM Dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build & Typecheck
+        working-directory: ./frontend
+        env:
+          VITE_API_BASE_URL: https://english-learning-backend.onrender.com/api
+        run: npm run build
