@@ -7,6 +7,7 @@ services:
   - type: web
     name: english-learning-backend
     runtime: docker
+    autoDeployTrigger: commit
     rootDir: backend
     dockerfilePath: ./Dockerfile
     plan: free
@@ -54,6 +55,7 @@ services:
   - type: web
     name: english-learning-frontend
     runtime: static
+    autoDeployTrigger: commit
     rootDir: frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
@@ -64,4 +66,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        sync: false
+        value: https://english-learning-backend-s2v4.onrender.com/api
