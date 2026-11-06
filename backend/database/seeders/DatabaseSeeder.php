@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             CategorySeeder::class,
             AchievementSeeder::class,
+            LearningContentSeeder::class,
         ]);
 
         if (app()->environment('local', 'testing')) {
