@@ -1,7 +1,7 @@
 {
-  "name": "VocabMaster - Học Từ Vựng Tiếng Anh",
-  "short_name": "VocabMaster",
-  "description": "Học từ vựng tiếng Anh thông minh với lộ trình CEFR, Spaced Repetition SRS và AI Tutor",
+  "name": "FreeEdu - Học Tiếng Anh Miễn Phí",
+  "short_name": "FreeEdu",
+  "description": "Học từ vựng tiếng Anh thông minh hoàn toàn miễn phí với lộ trình CEFR, Spaced Repetition SRS và AI Tutor",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",

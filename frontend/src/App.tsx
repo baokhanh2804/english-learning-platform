@@ -1059,7 +1059,7 @@ export default function App() {
             <span style={{ fontSize: '2rem' }}>🦉</span>
             <div>
               <div className="fw-bolder fs-5 text-dark" style={{ letterSpacing: '-0.5px' }}>
-                Vocab<span style={{ color: '#10b981' }}>Master</span>
+                Free<span style={{ color: '#10b981' }}>Edu</span>
               </div>
               <small className="text-muted d-none d-sm-inline" style={{ fontSize: '0.75rem' }}>
                 CEFR Lộ Trình • ELSA Nói • AI Tutor
@@ -1163,7 +1163,7 @@ export default function App() {
           >
             <div className="text-center mb-3">
               <span style={{ fontSize: '3rem' }}>📲</span>
-              <h4 className="fw-bolder mt-2 mb-1">Cài đặt VocabMaster lên Điện Thoại</h4>
+              <h4 className="fw-bolder mt-2 mb-1">Cài đặt FreeEdu lên Điện Thoại</h4>
               <p className="text-muted small">Dùng như một ứng dụng gốc (App Store / CH Play) với tốc độ tức thì và học ngoại tuyến!</p>
             </div>
 
@@ -1300,7 +1300,7 @@ export default function App() {
               <div className="text-center mb-4">
                 <div className="mb-2" style={{ fontSize: '3.6rem', lineHeight: 1 }}>🦉</div>
                 <h3 className="fw-bolder text-dark mb-1">
-                  {authMode === 'login' ? 'Chào mừng bạn trở lại!' : 'Bắt đầu cùng VocabMaster'}
+                  {authMode === 'login' ? 'Chào mừng bạn trở lại!' : 'Bắt đầu cùng FreeEdu'}
                 </h3>
                 <p className="text-muted small mb-0">
                   {authMode === 'login'

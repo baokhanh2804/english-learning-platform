@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return response()->json([
-        'name' => config('app.name', 'English Learning Platform API'),
+        'name' => config('app.name', 'FreeEdu API'),
         'status' => 'online',
         'environment' => app()->environment(),
         'health' => url('/api/health'),
