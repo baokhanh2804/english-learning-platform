@@ -866,69 +866,220 @@ export default function App() {
         </div>
       )}
 
-      {/* 2. MODE SELECTOR TABS (App-like pills) */}
-      <div className="bg-white border-bottom py-2">
-        <div className="app-container d-flex gap-2 overflow-auto py-1">
-          <button
-            className={`app-nav-pill ${activeTab === 'roadmap' ? 'active' : ''}`}
-            onClick={() => setActiveTab('roadmap')}
-          >
-            <span>🗺️</span> Lộ Trình (Roadmap)
-          </button>
+      {/* 2. MODE SELECTOR TABS (Chỉ hiển thị khi đã đăng nhập) */}
+      {currentUser && (
+        <div className="bg-white border-bottom py-2">
+          <div className="app-container d-flex gap-2 overflow-auto py-1">
+            <button
+              className={`app-nav-pill ${activeTab === 'roadmap' ? 'active' : ''}`}
+              onClick={() => setActiveTab('roadmap')}
+            >
+              <span>🗺️</span> Lộ Trình (Roadmap)
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'flashcards' ? 'active' : ''}`}
-            onClick={() => setActiveTab('flashcards')}
-          >
-            <span>🗂️</span> Thẻ Flashcards
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'flashcards' ? 'active' : ''}`}
+              onClick={() => setActiveTab('flashcards')}
+            >
+              <span>🗂️</span> Thẻ Flashcards
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'spell' ? 'active' : ''}`}
-            onClick={() => setActiveTab('spell')}
-          >
-            <span>🎧</span> Luyện Nghe (Ẩn chữ)
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'spell' ? 'active' : ''}`}
+              onClick={() => setActiveTab('spell')}
+            >
+              <span>🎧</span> Luyện Nghe (Ẩn chữ)
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'writing' ? 'active' : ''}`}
-            onClick={() => setActiveTab('writing')}
-          >
-            <span>✍️</span> Viết Nhật Ký
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'writing' ? 'active' : ''}`}
+              onClick={() => setActiveTab('writing')}
+            >
+              <span>✍️</span> Viết Nhật Ký
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'match' ? 'active' : ''}`}
-            onClick={() => setActiveTab('match')}
-          >
-            <span>🎮</span> Ghép Từ Nhanh
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'match' ? 'active' : ''}`}
+              onClick={() => setActiveTab('match')}
+            >
+              <span>🎮</span> Ghép Từ Nhanh
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'quiz' ? 'active' : ''}`}
-            onClick={() => setActiveTab('quiz')}
-          >
-            <span>📝</span> Trắc nghiệm Quiz
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'quiz' ? 'active' : ''}`}
+              onClick={() => setActiveTab('quiz')}
+            >
+              <span>📝</span> Trắc nghiệm Quiz
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'deck' ? 'active' : ''}`}
-            onClick={() => setActiveTab('deck')}
-          >
-            <span>📚</span> Sổ Từ Vựng ({vocabulary.length})
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'deck' ? 'active' : ''}`}
+              onClick={() => setActiveTab('deck')}
+            >
+              <span>📚</span> Sổ Từ Vựng ({vocabulary.length})
+            </button>
 
-          <button
-            className={`app-nav-pill ${activeTab === 'health' ? 'active' : ''}`}
-            onClick={() => setActiveTab('health')}
-          >
-            <span>⚡</span> Trạng thái Cloud
-          </button>
+            <button
+              className={`app-nav-pill ${activeTab === 'health' ? 'active' : ''}`}
+              onClick={() => setActiveTab('health')}
+            >
+              <span>⚡</span> Trạng thái Cloud
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 3. MAIN APP CONTENT AREA */}
       <main className="app-container py-4 flex-grow-1">
+
+        {/* ============================================================ */}
+        {/* BỨC TƯỜNG BẢO VỆ: CHẶN NGƯỜI NGOÀI NẾU CHƯA ĐĂNG NHẬP      */}
+        {/* ============================================================ */}
+        {!currentUser ? (
+          <div className="mx-auto my-3 text-center" style={{ maxWidth: '640px' }}>
+            <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
+              <div className="mb-3">
+                <span style={{ fontSize: '4.5rem' }}>🦉</span>
+                <span className="badge bg-danger rounded-pill px-3 py-2 fs-6 d-block mx-auto mt-2 shadow-sm" style={{ maxWidth: '280px' }}>
+                  🔒 YÊU CẦU ĐĂNG NHẬP
+                </span>
+              </div>
+
+              <h2 className="fw-bolder text-dark mb-2">Chào mừng đến với VocabMaster!</h2>
+              <p className="text-muted mb-4 fs-6">
+                Hệ thống học tiếng Anh thông minh theo chuẩn CEFR (A1–C2) với thuật toán ghi nhớ SRS, luyện nghe chính tả và viết nhật ký.
+                <br />
+                <strong className="text-danger">Tất cả bài học và lộ trình đều được bảo mật — Vui lòng đăng nhập để tiếp tục.</strong>
+              </p>
+
+              {/* Form Đăng nhập / Đăng ký Trực Tiếp Ngay Tại Trang Chủ */}
+              <div className="card bg-light border-0 rounded-4 p-4 text-start mb-4 shadow-sm">
+                <div className="d-flex rounded-pill bg-white p-1 mb-3 border">
+                  <button
+                    type="button"
+                    className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'login' ? 'btn-success text-white shadow-sm' : 'text-muted'}`}
+                    onClick={() => {
+                      setAuthMode('login');
+                      setAuthError(null);
+                    }}
+                  >
+                    Đăng nhập tài khoản
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'register' ? 'btn-success text-white shadow-sm' : 'text-muted'}`}
+                    onClick={() => {
+                      setAuthMode('register');
+                      setAuthError(null);
+                    }}
+                  >
+                    Đăng ký học viên (+50 XP)
+                  </button>
+                </div>
+
+                {authError && (
+                  <div className="alert alert-danger py-2 px-3 small rounded-3 mb-3">
+                    {authError}
+                  </div>
+                )}
+
+                {authSuccess && (
+                  <div className="alert alert-success py-2 px-3 small rounded-3 mb-3">
+                    {authSuccess}
+                  </div>
+                )}
+
+                <form onSubmit={handleAuthSubmit}>
+                  {authMode === 'register' && (
+                    <div className="mb-3">
+                      <label className="form-label small fw-bold text-muted">Họ và tên của bạn</label>
+                      <input
+                        type="text"
+                        required
+                        className="form-control rounded-3"
+                        placeholder="VD: Nguyễn Bảo Khánh"
+                        value={authForm.name}
+                        onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
+                      />
+                    </div>
+                  )}
+
+                  <div className="mb-3">
+                    <label className="form-label small fw-bold text-muted">Email học viên</label>
+                    <input
+                      type="email"
+                      required
+                      className="form-control rounded-3"
+                      placeholder="name@example.com"
+                      value={authForm.email}
+                      onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="form-label small fw-bold text-muted">Mật khẩu</label>
+                    <input
+                      type="password"
+                      required
+                      minLength={6}
+                      className="form-control rounded-3"
+                      placeholder="Tối thiểu 6 ký tự"
+                      value={authForm.password}
+                      onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-duo btn-duo-green w-100 py-3 fs-5"
+                    disabled={authLoading}
+                  >
+                    {authLoading ? 'Đang xác thực...' : authMode === 'login' ? 'Đăng nhập vào học ngay 🚀' : 'Tạo tài khoản & Mở khóa (+50 XP) ✨'}
+                  </button>
+                </form>
+              </div>
+
+              {/* 4 Feature Highlights */}
+              <div className="row g-3 text-start">
+                <div className="col-12 col-md-6">
+                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
+                    <div className="fs-4 mb-1">🗺️</div>
+                    <strong className="d-block mb-1 text-dark">Lộ trình CEFR A1 - C2</strong>
+                    <small className="text-muted">Mở khóa từng mốc kiến thức, đo lường sự tiến bộ qua XP và các ngôi sao.</small>
+                  </div>
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
+                    <div className="fs-4 mb-1">🗂️</div>
+                    <strong className="d-block mb-1 text-dark">Thẻ SRS 3D & Luyện nghe</strong>
+                    <small className="text-muted">Ghi nhớ từ vựng sâu, luyện nghe chính tả ẩn chữ với giọng đọc bản ngữ.</small>
+                  </div>
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
+                    <div className="fs-4 mb-1">✍️</div>
+                    <strong className="d-block mb-1 text-dark">Viết nhật ký theo lộ trình</strong>
+                    <small className="text-muted">Thực hành viết đoạn văn theo cấp độ, kiểm tra từ vựng mục tiêu tức thì.</small>
+                  </div>
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
+                    <div className="fs-4 mb-1">⚠️</div>
+                    <strong className="d-block mb-1 text-dark">Kỷ luật trừ điểm khi lười</strong>
+                    <small className="text-muted">Tự động trừ 20 XP khi bỏ lỡ ngày học, rèn luyện thói quen học tập bền bỉ.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* ============================================================ */
+          /* NỘI DUNG HỌC TẬP: CHỈ DÀNH CHO HỌC VIÊN ĐÃ ĐĂNG NHẬP        */
+          /* ============================================================ */
+          <>
 
         {/* TAB 0: ROADMAP (CƠ CHẾ LỘ TRÌNH DUOLINGO STYLE) */}
         {activeTab === 'roadmap' && (
@@ -1821,6 +1972,8 @@ export default function App() {
             </div>
           </div>
         )}
+        </>
+      )}
       </main>
 
       {/* 4. AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) */}

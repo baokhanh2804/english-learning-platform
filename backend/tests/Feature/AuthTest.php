@@ -73,4 +73,28 @@ class AuthTest extends TestCase
         $logoutResponse->assertStatus(200)
             ->assertJsonPath('message', 'Đăng xuất thành công!');
     }
+
+    public function test_unauthenticated_users_are_blocked_from_learning_resources(): void
+    {
+        // 1. Without token -> Blocked (401 Unauthorized)
+        $unauthResponse = $this->getJson('/api/vocabulary');
+        $unauthResponse->assertStatus(401);
+
+        $unauthLevels = $this->getJson('/api/levels');
+        $unauthLevels->assertStatus(401);
+
+        // 2. With valid Sanctum token -> Allowed (200 OK)
+        $user = User::create([
+            'name' => 'Enrolled Student',
+            'email' => 'student@example.com',
+            'password' => bcrypt('secret123'),
+        ]);
+
+        $token = $user->createToken('test_token')->plainTextToken;
+
+        $authResponse = $this->withHeader('Authorization', "Bearer $token")
+            ->getJson('/api/levels');
+
+        $authResponse->assertStatus(200);
+    }
 }
