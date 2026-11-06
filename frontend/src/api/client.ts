@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+let rawBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://english-learning-backend-s2v4.onrender.com/api';
+if (rawBaseUrl === 'https://english-learning-backend.onrender.com/api') {
+  rawBaseUrl = 'https://english-learning-backend-s2v4.onrender.com/api';
+}
+
+const API_BASE_URL = rawBaseUrl;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

@@ -23,7 +23,9 @@ return [
         array_map('trim', explode(',', env('CORS_ALLOWED_ORIGINS', env('FRONTEND_URL', 'http://localhost:5173'))))
     ),
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '#^https://.*\.onrender\.com$#',
+    ],
 
     'allowed_headers' => ['*'],
 

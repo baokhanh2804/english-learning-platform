@@ -62,7 +62,7 @@ function App() {
               )}
             </button>
             <span className="text-muted small">
-              Endpoint: <code>{import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'}/health</code>
+              Endpoint: <code>https://english-learning-backend-s2v4.onrender.com/api/health</code>
             </span>
           </div>
 
