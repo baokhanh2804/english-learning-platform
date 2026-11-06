@@ -30,10 +30,12 @@ services:
         value: require
       - key: DB_PORT
         value: "5432"
+      - key: SESSION_DRIVER
+        value: cookie
 
       # Secrets & Dynamic Host URLs (to be set in Render dashboard or prompt)
       - key: APP_KEY
-        sync: false
+        value: "base64:7vF8r+jP9Wf2Z3K1mH6uT8yC4gE7aX9oQ3lM1bN2kP4="
       - key: APP_URL
         sync: false
       - key: DB_HOST

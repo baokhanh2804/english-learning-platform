@@ -531,7 +531,6 @@ export default function App() {
 
   // Authentication State
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
-  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [authForm, setAuthForm] = useState({ name: '', email: '', password: '' });
   const [authLoading, setAuthLoading] = useState<boolean>(false);
@@ -1019,7 +1018,6 @@ export default function App() {
         playSoundEffect('win');
         addXp(30);
         setTimeout(() => {
-          setShowAuthModal(false);
           setAuthSuccess(null);
         }, 800);
       } else {
@@ -1029,7 +1027,6 @@ export default function App() {
         playSoundEffect('win');
         addXp(50);
         setTimeout(() => {
-          setShowAuthModal(false);
           setAuthSuccess(null);
         }, 800);
       }
@@ -1070,51 +1067,51 @@ export default function App() {
             </div>
           </div>
 
-          {/* Gamification Stats Bar & User Auth */}
-          <div className="d-flex align-items-center gap-2">
-            <div className="stat-chip stat-chip-streak" title="Chuỗi ngày học liên tục">
-              <span>🔥</span>
-              <span>{streak} ngày</span>
-            </div>
+          {/* Gamification Stats Bar (Only when logged in) OR Clean Switcher */}
+          {currentUser ? (
+            <div className="d-flex align-items-center gap-2">
+              <div className="stat-chip stat-chip-streak" title="Chuỗi ngày học liên tục">
+                <span>🔥</span>
+                <span>{streak} ngày</span>
+              </div>
 
-            <div className="stat-chip stat-chip-xp" title="Điểm kinh nghiệm XP">
-              <span>⚡</span>
-              <span>{xp} XP</span>
-            </div>
+              <div className="stat-chip stat-chip-xp" title="Điểm kinh nghiệm XP">
+                <span>⚡</span>
+                <span>{xp} XP</span>
+              </div>
 
-            <div className="stat-chip stat-chip-gems d-none d-md-inline-flex" title="Kim cương tích lũy">
-              <span>💎</span>
-              <span>{gems}</span>
-            </div>
+              <div className="stat-chip stat-chip-gems d-none d-md-inline-flex" title="Kim cương tích lũy">
+                <span>💎</span>
+                <span>{gems}</span>
+              </div>
 
-            <div className="stat-chip stat-chip-hearts d-none d-md-inline-flex" title="Số tim còn lại">
-              <span>❤️</span>
-              <span>{hearts}</span>
-            </div>
+              <div className="stat-chip stat-chip-hearts d-none d-md-inline-flex" title="Số tim còn lại">
+                <span>❤️</span>
+                <span>{hearts}</span>
+              </div>
 
-            {/* PWA Install Button */}
-            <button
-              className="btn btn-sm btn-outline-success rounded-pill px-2 py-1 text-nowrap d-none d-sm-inline-flex align-items-center gap-1"
-              onClick={() => setShowPwaBanner(true)}
-              style={{ fontSize: '0.75rem', fontWeight: 700 }}
-              title="Cài đặt App lên màn hình chính điện thoại iOS / Android"
-            >
-              <span>📲</span>
-              <span>Cài App</span>
-            </button>
+              {/* PWA Install Button */}
+              <button
+                className="btn btn-sm btn-outline-success rounded-pill px-2 py-1 text-nowrap d-none d-sm-inline-flex align-items-center gap-1"
+                onClick={() => setShowPwaBanner(true)}
+                style={{ fontSize: '0.75rem', fontWeight: 700 }}
+                title="Cài đặt App lên màn hình chính điện thoại iOS / Android"
+              >
+                <span>📲</span>
+                <span>Cài App</span>
+              </button>
 
-            {/* Test Simulation Button: Simulate missed day & decay */}
-            <button
-              className="btn btn-sm btn-outline-warning rounded-pill px-2 py-1 text-nowrap d-none d-lg-inline-block"
-              onClick={handleSimulateMissedDay}
-              title="Bấm để thử nghiệm cơ chế trừ 20 XP khi quên online học bài"
-              style={{ fontSize: '0.75rem', fontWeight: 700 }}
-            >
-              ⏳ Thử trừ 20 XP
-            </button>
+              {/* Test Simulation Button: Simulate missed day & decay */}
+              <button
+                className="btn btn-sm btn-outline-warning rounded-pill px-2 py-1 text-nowrap d-none d-lg-inline-block"
+                onClick={handleSimulateMissedDay}
+                title="Bấm để thử nghiệm cơ chế trừ 20 XP khi quên online học bài"
+                style={{ fontSize: '0.75rem', fontWeight: 700 }}
+              >
+                ⏳ Thử trừ 20 XP
+              </button>
 
-            {/* User Profile / Login Button */}
-            {currentUser ? (
+              {/* User Profile / Logout Button */}
               <div className="d-flex align-items-center gap-2 ms-1">
                 <div className="stat-chip bg-light text-dark border px-2 py-1" title={currentUser.email}>
                   <span>👤</span>
@@ -1131,21 +1128,24 @@ export default function App() {
                   Thoát
                 </button>
               </div>
-            ) : (
+            </div>
+          ) : (
+            <div className="d-flex align-items-center gap-2">
+              <span className="text-muted small d-none d-sm-inline">
+                {authMode === 'login' ? 'Chưa có tài khoản?' : 'Đã có tài khoản?'}
+              </span>
               <button
-                className="btn-duo btn-duo-green px-3 py-1 ms-1"
-                style={{ fontSize: '0.85rem' }}
+                className="btn btn-sm btn-outline-success rounded-pill px-3 py-1 fw-bold"
                 onClick={() => {
+                  setAuthMode(authMode === 'login' ? 'register' : 'login');
                   setAuthError(null);
                   setAuthSuccess(null);
-                  setShowAuthModal(true);
                 }}
               >
-                <span>🔑</span>
-                <span>Đăng nhập</span>
+                {authMode === 'login' ? 'Đăng ký ngay ✨' : 'Đăng nhập 🔑'}
               </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </header>
 
@@ -1292,144 +1292,124 @@ export default function App() {
       {/* 3. MAIN APP CONTENT AREA */}
       <main className="app-container py-4 flex-grow-1">
 
-        {/* BỨC TƯỜNG BẢO VỆ: CHẶN NGƯỜI NGOÀI NẾU CHƯA ĐĂNG NHẬP */}
+        {/* TRANG ĐĂNG NHẬP / ĐĂNG KÝ: TINH GỌN, HIỆN ĐẠI & TẬP TRUNG */}
         {!currentUser ? (
-          <div className="mx-auto my-3 text-center" style={{ maxWidth: '640px' }}>
-            <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
-              <div className="mb-3">
-                <span style={{ fontSize: '4.5rem' }}>🦉</span>
-                <span className="badge bg-danger rounded-pill px-3 py-2 fs-6 d-block mx-auto mt-2 shadow-sm" style={{ maxWidth: '280px' }}>
-                  🔒 YÊU CẦU ĐĂNG NHẬP
-                </span>
+          <div className="auth-page-wrapper">
+            <div className="auth-card">
+              {/* Mascot & Header */}
+              <div className="text-center mb-4">
+                <div className="mb-2" style={{ fontSize: '3.6rem', lineHeight: 1 }}>🦉</div>
+                <h3 className="fw-bolder text-dark mb-1">
+                  {authMode === 'login' ? 'Chào mừng bạn trở lại!' : 'Bắt đầu cùng VocabMaster'}
+                </h3>
+                <p className="text-muted small mb-0">
+                  {authMode === 'login'
+                    ? 'Đăng nhập để tiếp tục lộ trình học và bảo vệ chuỗi streak'
+                    : 'Tạo tài khoản học viên miễn phí và nhận ngay +50 XP'}
+                </p>
               </div>
 
-              <h2 className="fw-bolder text-dark mb-2">Chào mừng đến với VocabMaster!</h2>
-              <p className="text-muted mb-4 fs-6">
-                Học từ vựng thông minh CEFR (A1–C2), luyện phát âm chuẩn ELSA Speak, trợ lý AI đối thoại nhập vai và rèn luyện kỷ luật trừ điểm khi không online.
-                <br />
-                <strong className="text-danger">Toàn bộ bài học đều được bảo mật — Vui lòng đăng nhập để bắt đầu!</strong>
-              </p>
+              {/* Segmented Switcher Pill */}
+              <div className="d-flex rounded-pill bg-light p-1 mb-4 border">
+                <button
+                  type="button"
+                  className={`auth-tab-pill ${authMode === 'login' ? 'active' : ''}`}
+                  onClick={() => {
+                    setAuthMode('login');
+                    setAuthError(null);
+                    setAuthSuccess(null);
+                  }}
+                >
+                  Đăng nhập
+                </button>
+                <button
+                  type="button"
+                  className={`auth-tab-pill ${authMode === 'register' ? 'active' : ''}`}
+                  onClick={() => {
+                    setAuthMode('register');
+                    setAuthError(null);
+                    setAuthSuccess(null);
+                  }}
+                >
+                  Đăng ký mới
+                </button>
+              </div>
 
-              {/* Form Đăng nhập & Đăng ký Ngay Trang Chủ */}
-              <div className="card bg-light border-0 rounded-4 p-4 text-start mb-4 shadow-sm">
-                <div className="d-flex rounded-pill bg-white p-1 mb-3 border">
-                  <button
-                    type="button"
-                    className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'login' ? 'btn-success text-white shadow-sm' : 'text-muted'}`}
-                    onClick={() => {
-                      setAuthMode('login');
-                      setAuthError(null);
-                    }}
-                  >
-                    Đăng nhập tài khoản
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'register' ? 'btn-success text-white shadow-sm' : 'text-muted'}`}
-                    onClick={() => {
-                      setAuthMode('register');
-                      setAuthError(null);
-                    }}
-                  >
-                    Đăng ký học viên (+50 XP)
-                  </button>
+              {/* Alerts */}
+              {authError && (
+                <div className="alert alert-danger py-2 px-3 small rounded-3 mb-3 d-flex align-items-center gap-2">
+                  <span>⚠️</span>
+                  <div>{authError}</div>
                 </div>
+              )}
 
-                {authError && (
-                  <div className="alert alert-danger py-2 px-3 small rounded-3 mb-3">
-                    {authError}
+              {authSuccess && (
+                <div className="alert alert-success py-2 px-3 small rounded-3 mb-3 d-flex align-items-center gap-2">
+                  <span>🎉</span>
+                  <div>{authSuccess}</div>
+                </div>
+              )}
+
+              {/* Auth Form */}
+              <form onSubmit={handleAuthSubmit}>
+                {authMode === 'register' && (
+                  <div className="auth-input-group">
+                    <span className="auth-input-icon">👤</span>
+                    <input
+                      type="text"
+                      required
+                      className="form-control"
+                      placeholder="Họ và tên của bạn"
+                      value={authForm.name}
+                      onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
+                    />
                   </div>
                 )}
 
-                {authSuccess && (
-                  <div className="alert alert-success py-2 px-3 small rounded-3 mb-3">
-                    {authSuccess}
-                  </div>
-                )}
-
-                <form onSubmit={handleAuthSubmit}>
-                  {authMode === 'register' && (
-                    <div className="mb-3">
-                      <label className="form-label small fw-bold text-muted">Họ và tên của bạn</label>
-                      <input
-                        type="text"
-                        required
-                        className="form-control rounded-3"
-                        placeholder="VD: Nguyễn Bảo Khánh"
-                        value={authForm.name}
-                        onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
-                      />
-                    </div>
-                  )}
-
-                  <div className="mb-3">
-                    <label className="form-label small fw-bold text-muted">Email học viên</label>
-                    <input
-                      type="email"
-                      required
-                      className="form-control rounded-3"
-                      placeholder="name@example.com"
-                      value={authForm.email}
-                      onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label small fw-bold text-muted">Mật khẩu</label>
-                    <input
-                      type="password"
-                      required
-                      minLength={6}
-                      className="form-control rounded-3"
-                      placeholder="Tối thiểu 6 ký tự"
-                      value={authForm.password}
-                      onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="btn btn-duo btn-duo-green w-100 py-3 fs-5"
-                    disabled={authLoading}
-                  >
-                    {authLoading ? 'Đang xác thực...' : authMode === 'login' ? 'Đăng nhập vào học ngay 🚀' : 'Tạo tài khoản & Mở khóa (+50 XP) ✨'}
-                  </button>
-                </form>
-              </div>
-
-              {/* 4 Feature Highlights */}
-              <div className="row g-3 text-start">
-                <div className="col-12 col-md-6">
-                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">🎙️</div>
-                    <strong className="d-block mb-1 text-dark">Luyện nói AI (Giống ELSA)</strong>
-                    <small className="text-muted">Bấm micro tự đọc từ vựng, chấm điểm % độ chuẩn và nhận diện âm đuôi.</small>
-                  </div>
+                <div className="auth-input-group">
+                  <span className="auth-input-icon">✉️</span>
+                  <input
+                    type="email"
+                    required
+                    className="form-control"
+                    placeholder="Email học viên"
+                    value={authForm.email}
+                    onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+                  />
                 </div>
 
-                <div className="col-12 col-md-6">
-                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">🤖</div>
-                    <strong className="d-block mb-1 text-dark">Trợ lý AI Đàm Thoại</strong>
-                    <small className="text-muted">Chat nhập vai tại quán cà phê, sân bay và phỏng vấn việc làm kèm audio bản ngữ.</small>
-                  </div>
+                <div className="auth-input-group">
+                  <span className="auth-input-icon">🔒</span>
+                  <input
+                    type="password"
+                    required
+                    minLength={6}
+                    className="form-control"
+                    placeholder="Mật khẩu (tối thiểu 6 ký tự)"
+                    value={authForm.password}
+                    onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
+                  />
                 </div>
 
-                <div className="col-12 col-md-6">
-                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">🗺️</div>
-                    <strong className="d-block mb-1 text-dark">Bản đồ Lộ trình CEFR</strong>
-                    <small className="text-muted">Mở khóa cấp độ A1 ➜ C2 theo từng mốc kỹ năng, hình ảnh trực quan 100% miễn phí.</small>
-                  </div>
-                </div>
+                <button
+                  type="submit"
+                  className="btn btn-duo btn-duo-green w-100 py-3 mt-2"
+                  disabled={authLoading}
+                  style={{ fontSize: '1rem', fontWeight: 800 }}
+                >
+                  {authLoading
+                    ? 'Đang kết nối Cloud...'
+                    : authMode === 'login'
+                    ? 'Đăng nhập ngay 🚀'
+                    : 'Tạo tài khoản & Mở khóa (+50 XP) ✨'}
+                </button>
+              </form>
 
-                <div className="col-12 col-md-6">
-                  <div className="p-3 rounded-4 bg-white border h-100 shadow-sm">
-                    <div className="fs-4 mb-1">📲</div>
-                    <strong className="d-block mb-1 text-dark">Cài vào Điện Thoại (PWA)</strong>
-                    <small className="text-muted">Mở trên Safari/Chrome, thêm vào màn hình chính dùng như ứng dụng App Store.</small>
-                  </div>
-                </div>
+              {/* Footer Trust Info */}
+              <div className="text-center mt-4">
+                <small className="text-muted" style={{ fontSize: '0.78rem' }}>
+                  🔒 Dữ liệu học tập được đồng bộ đám mây và mã hóa an toàn.
+                </small>
               </div>
             </div>
           </div>
@@ -2563,132 +2543,6 @@ export default function App() {
           </>
         )}
       </main>
-
-      {/* 4. AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) */}
-      {showAuthModal && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
-          style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(6px)', zIndex: 9999 }}
-          onClick={() => setShowAuthModal(false)}
-        >
-          <div
-            className="card border-0 rounded-4 shadow-lg p-4 bg-white"
-            style={{ maxWidth: '420px', width: '100%', position: 'relative' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="btn-close position-absolute top-0 end-0 m-3"
-              onClick={() => setShowAuthModal(false)}
-              aria-label="Close"
-            />
-
-            <div className="text-center mb-3">
-              <span style={{ fontSize: '2.5rem' }}>🦉</span>
-              <h4 className="fw-bolder mt-1 mb-1">
-                {authMode === 'login' ? 'Đăng nhập VocabMaster' : 'Tạo tài khoản mới'}
-              </h4>
-              <p className="text-muted small mb-0">
-                {authMode === 'login'
-                  ? 'Đăng nhập để lưu tiến độ và giữ chuỗi ngày học!'
-                  : 'Tạo tài khoản hoàn toàn miễn phí và nhận ngay +50 XP!'}
-              </p>
-            </div>
-
-            <div className="d-flex rounded-pill bg-light p-1 mb-3 border">
-              <button
-                type="button"
-                className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'login' ? 'bg-white shadow-sm text-success' : 'text-muted'}`}
-                onClick={() => {
-                  setAuthMode('login');
-                  setAuthError(null);
-                  setAuthSuccess(null);
-                }}
-              >
-                Đăng nhập
-              </button>
-              <button
-                type="button"
-                className={`btn btn-sm flex-fill rounded-pill fw-bold ${authMode === 'register' ? 'bg-white shadow-sm text-success' : 'text-muted'}`}
-                onClick={() => {
-                  setAuthMode('register');
-                  setAuthError(null);
-                  setAuthSuccess(null);
-                }}
-              >
-                Đăng ký mới
-              </button>
-            </div>
-
-            {authError && (
-              <div className="alert alert-danger py-2 px-3 small rounded-3 mb-3">
-                {authError}
-              </div>
-            )}
-
-            {authSuccess && (
-              <div className="alert alert-success py-2 px-3 small rounded-3 mb-3">
-                {authSuccess}
-              </div>
-            )}
-
-            <form onSubmit={handleAuthSubmit}>
-              {authMode === 'register' && (
-                <div className="mb-3 text-start">
-                  <label className="form-label small fw-bold text-muted">Họ và tên của bạn</label>
-                  <input
-                    type="text"
-                    required
-                    className="form-control rounded-3"
-                    placeholder="VD: Nguyễn Bảo Khánh"
-                    value={authForm.name}
-                    onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
-                  />
-                </div>
-              )}
-
-              <div className="mb-3 text-start">
-                <label className="form-label small fw-bold text-muted">Email</label>
-                <input
-                  type="email"
-                  required
-                  className="form-control rounded-3"
-                  placeholder="name@example.com"
-                  value={authForm.email}
-                  onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                />
-              </div>
-
-              <div className="mb-4 text-start">
-                <label className="form-label small fw-bold text-muted">Mật khẩu</label>
-                <input
-                  type="password"
-                  required
-                  minLength={6}
-                  className="form-control rounded-3"
-                  placeholder="Tối thiểu 6 ký tự"
-                  value={authForm.password}
-                  onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="btn btn-duo btn-duo-green w-100 py-2 fs-6 mb-2"
-                disabled={authLoading}
-              >
-                {authLoading ? (
-                  <span>Đang xử lý...</span>
-                ) : authMode === 'login' ? (
-                  'Đăng nhập ngay 🚀'
-                ) : (
-                  'Tạo tài khoản (+50 XP) ✨'
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -8,6 +8,6 @@ Route::get('/', function () {
         'status' => 'online',
         'environment' => app()->environment(),
         'health' => url('/api/health'),
-        'frontend' => env('FRONTEND_URL'),
+        'frontend' => env('FRONTEND_URL', 'https://english-learning-frontend-3al6.onrender.com'),
     ]);
 });
