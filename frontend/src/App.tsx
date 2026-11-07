@@ -1097,77 +1097,27 @@ export default function App() {
     localStorage.removeItem('auth_user');
   };
 
-  return (
-    <div className="app-wrapper">
-      {/* 1. TOP APP BAR - Duolingo Gamified Header */}
-      <header className="app-topbar shadow-sm">
-        <div className="app-container d-flex align-items-center justify-content-between">
-          {/* Logo & Brand Slogan */}
-          <div className="d-flex align-items-center gap-2 cursor-pointer text-nowrap" onClick={() => setActiveTab('roadmap')}>
-            <span style={{ fontSize: '2.2rem', lineHeight: 1 }}>🦉</span>
-            <div>
-              <div className="fw-bolder fs-5 text-dark lh-1" style={{ letterSpacing: '-0.5px' }}>
-                Free<span style={{ color: '#10b981' }}>Edu</span>
-              </div>
-              <small className="text-muted text-nowrap d-none d-md-inline" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
-                Học Tiếng Anh CEFR • AI Tutor
-              </small>
-            </div>
-          </div>
-
-          {/* Gamification Stats Bar (Only when logged in) OR Clean Switcher */}
-          {currentUser ? (
-            <div className="d-flex align-items-center gap-2">
-              <div className="stat-chip stat-chip-streak" title="Chuỗi ngày học liên tục">
-                <span>🔥</span>
-                <span>{streak} ngày</span>
-              </div>
-
-              <div className="stat-chip stat-chip-xp" title="Điểm kinh nghiệm XP">
-                <span>⚡</span>
-                <span>{xp} XP</span>
-              </div>
-
-              <div className="stat-chip stat-chip-gems d-none d-md-inline-flex" title="Kim cương tích lũy">
-                <span>💎</span>
-                <span>{gems}</span>
-              </div>
-
-              <div className="stat-chip stat-chip-hearts d-none d-md-inline-flex" title="Số tim còn lại">
-                <span>❤️</span>
-                <span>{hearts}</span>
-              </div>
-
-              {/* PWA Install Button */}
-              <button
-                className="btn btn-sm btn-outline-success rounded-pill px-2 py-1 text-nowrap d-none d-sm-inline-flex align-items-center gap-1"
-                onClick={() => setShowPwaBanner(true)}
-                style={{ fontSize: '0.75rem', fontWeight: 700 }}
-                title="Cài đặt App lên màn hình chính điện thoại iOS / Android"
-              >
-                <span>📲</span>
-                <span>Cài App</span>
-              </button>
-
-              {/* User Profile / Logout Button (No Dev Test Button in Header!) */}
-              <div className="d-flex align-items-center gap-2 ms-1">
-                <div className="stat-chip bg-light text-dark border px-2 py-1" title={currentUser.email}>
-                  <span>👤</span>
-                  <span className="fw-bold text-truncate" style={{ maxWidth: '140px' }}>
-                    {currentUser.name}
-                  </span>
+  // 1. UNPROTECTED / AUTHENTICATION PAGE: Render Clean Centered View
+  if (!currentUser) {
+    return (
+      <div className="app-wrapper">
+        {/* Minimal Topbar for Landing / Auth */}
+        <header className="app-topbar shadow-sm">
+          <div className="app-container d-flex align-items-center justify-content-between">
+            {/* Logo & Brand Slogan */}
+            <div className="d-flex align-items-center gap-2 cursor-pointer text-nowrap" onClick={() => setActiveTab('roadmap')}>
+              <span style={{ fontSize: '2.2rem', lineHeight: 1 }}>🦉</span>
+              <div>
+                <div className="fw-bolder fs-5 text-dark lh-1" style={{ letterSpacing: '-0.5px' }}>
+                  Free<span style={{ color: '#10b981' }}>Edu</span>
                 </div>
-                <button
-                  className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"
-                  onClick={handleLogout}
-                  title="Đăng xuất khỏi tài khoản"
-                  style={{ fontSize: '0.8rem', fontWeight: 700 }}
-                >
-                  Thoát
-                </button>
+                <small className="text-muted text-nowrap d-none d-md-inline" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                  Học Tiếng Anh CEFR • AI Tutor
+                </small>
               </div>
             </div>
-          ) : (
+
+            {/* Auth Switcher */}
             <div className="d-flex align-items-center gap-2">
               <span className="text-muted small d-none d-sm-inline">
                 {authMode === 'login' ? 'Chưa có tài khoản?' : 'Đã có tài khoản?'}
@@ -1183,155 +1133,53 @@ export default function App() {
                 {authMode === 'login' ? 'Đăng ký ngay ✨' : 'Đăng nhập 🔑'}
               </button>
             </div>
-          )}
-        </div>
-      </header>
+          </div>
+        </header>
 
-      {/* PWA Installation Instructions Modal */}
-      {showPwaBanner && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
-          style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(6px)', zIndex: 9999 }}
-          onClick={() => setShowPwaBanner(false)}
-        >
+        {/* PWA Modal if requested */}
+        {showPwaBanner && (
           <div
-            className="card border-0 rounded-4 shadow-lg p-4 bg-white"
-            style={{ maxWidth: '440px', width: '100%' }}
-            onClick={(e) => e.stopPropagation()}
+            className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+            style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(6px)', zIndex: 9999 }}
+            onClick={() => setShowPwaBanner(false)}
           >
-            <div className="text-center mb-3">
-              <span style={{ fontSize: '3rem' }}>📲</span>
-              <h4 className="fw-bolder mt-2 mb-1">Cài đặt FreeEdu lên Điện Thoại</h4>
-              <p className="text-muted small">Dùng như một ứng dụng gốc (App Store / CH Play) với tốc độ tức thì và học ngoại tuyến!</p>
-            </div>
-
-            <div className="bg-light p-3 rounded-4 mb-3 small text-start">
-              <div className="fw-bold mb-2 text-dark">📱 Đối với iPhone / iPad (Safari):</div>
-              <ol className="mb-0 ps-3">
-                <li>Bấm vào biểu tượng <strong>Chia sẻ (Share) 📤</strong> ở thanh công cụ dưới cùng Safari.</li>
-                <li>Cuộn xuống và chọn <strong>"Thêm vào Màn hình chính" (Add to Home Screen) ➕</strong>.</li>
-                <li>Bấm <strong>"Thêm" (Add)</strong> ở góc trên bên phải.</li>
-              </ol>
-
-              <hr />
-
-              <div className="fw-bold mb-2 text-dark">🤖 Đối với Android (Chrome):</div>
-              <ol className="mb-0 ps-3">
-                <li>Bấm vào biểu tượng <strong>3 chấm dọc ⋮</strong> ở góc trên bên phải Chrome.</li>
-                <li>Chọn <strong>"Cài đặt ứng dụng"</strong> hoặc <strong>"Thêm vào Màn hình chính"</strong>.</li>
-              </ol>
-            </div>
-
-            <button className="btn btn-duo btn-duo-green w-100 py-2" onClick={() => setShowPwaBanner(false)}>
-              Đã hiểu, đóng hướng dẫn 👍
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Daily Decay / Missed Day Alert Banner */}
-      {decayWarning && (
-        <div className="app-container pt-3">
-          <div className="decay-alert-banner">
-            <div className="d-flex align-items-center gap-3">
-              <span className="fs-3">⚠️</span>
-              <div>
-                <div className="fw-bold text-danger">Kỷ luật học tập & Trừ điểm kinh nghiệm:</div>
-                <div className="small text-danger-emphasis">{decayWarning}</div>
+            <div
+              className="card border-0 rounded-4 shadow-lg p-4 bg-white"
+              style={{ maxWidth: '440px', width: '100%' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-center mb-3">
+                <span style={{ fontSize: '3rem' }}>📲</span>
+                <h4 className="fw-bolder mt-2 mb-1">Cài đặt FreeEdu lên Điện Thoại</h4>
+                <p className="text-muted small">Dùng như một ứng dụng gốc (App Store / CH Play) với tốc độ tức thì và học ngoại tuyến!</p>
               </div>
+
+              <div className="bg-light p-3 rounded-4 mb-3 small text-start">
+                <div className="fw-bold mb-2 text-dark">📱 Đối với iPhone / iPad (Safari):</div>
+                <ol className="mb-0 ps-3">
+                  <li>Bấm vào biểu tượng <strong>Chia sẻ (Share) 📤</strong> ở thanh công cụ dưới cùng Safari.</li>
+                  <li>Cuộn xuống và chọn <strong>"Thêm vào Màn hình chính" (Add to Home Screen) ➕</strong>.</li>
+                  <li>Bấm <strong>"Thêm" (Add)</strong> ở góc trên bên phải.</li>
+                </ol>
+
+                <hr />
+
+                <div className="fw-bold mb-2 text-dark">🤖 Đối với Android (Chrome):</div>
+                <ol className="mb-0 ps-3">
+                  <li>Bấm vào biểu tượng <strong>3 chấm dọc ⋮</strong> ở góc trên bên phải Chrome.</li>
+                  <li>Chọn <strong>"Cài đặt ứng dụng"</strong> hoặc <strong>"Thêm vào Màn hình chính"</strong>.</li>
+                </ol>
+              </div>
+
+              <button className="btn btn-duo btn-duo-green w-100 py-2" onClick={() => setShowPwaBanner(false)}>
+                Đã hiểu, đóng hướng dẫn 👍
+              </button>
             </div>
-            <button
-              className="btn btn-sm btn-outline-danger rounded-pill px-3 fw-bold"
-              onClick={() => setDecayWarning(null)}
-            >
-              Đã hiểu ✕
-            </button>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* 2. MODE SELECTOR TABS (Chỉ hiển thị khi đã đăng nhập) */}
-      {currentUser && (
-        <div className="bg-white border-bottom shadow-sm">
-          <div className="app-container app-nav-bar-container">
-            <button
-              className={`app-nav-pill ${activeTab === 'roadmap' ? 'active' : ''}`}
-              onClick={() => setActiveTab('roadmap')}
-            >
-              <span>🗺️</span> Lộ Trình
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'flashcards' ? 'active' : ''}`}
-              onClick={() => setActiveTab('flashcards')}
-            >
-              <span>🗂️</span> Thẻ 3D Có Ảnh
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'speech' ? 'active' : ''}`}
-              onClick={() => setActiveTab('speech')}
-            >
-              <span>🎙️</span> Luyện Nói (ELSA)
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'ai_chat' ? 'active' : ''}`}
-              onClick={() => setActiveTab('ai_chat')}
-            >
-              <span>🤖</span> Trợ Lý AI Chat
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'spell' ? 'active' : ''}`}
-              onClick={() => setActiveTab('spell')}
-            >
-              <span>🎧</span> Luyện Nghe (Ẩn chữ)
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'writing' ? 'active' : ''}`}
-              onClick={() => setActiveTab('writing')}
-            >
-              <span>✍️</span> Viết Nhật Ký
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'match' ? 'active' : ''}`}
-              onClick={() => setActiveTab('match')}
-            >
-              <span>🎮</span> Ghép Từ
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'quiz' ? 'active' : ''}`}
-              onClick={() => setActiveTab('quiz')}
-            >
-              <span>📝</span> Trắc nghiệm
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'deck' ? 'active' : ''}`}
-              onClick={() => setActiveTab('deck')}
-            >
-              <span>📚</span> Sổ Từ ({vocabulary.length})
-            </button>
-
-            <button
-              className={`app-nav-pill ${activeTab === 'health' ? 'active' : ''}`}
-              onClick={() => setActiveTab('health')}
-            >
-              <span>⚡</span> Trạng thái Cloud
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* 3. MAIN APP CONTENT AREA */}
-      <main className="app-container py-4 flex-grow-1">
-
-        {/* TRANG ĐĂNG NHẬP / ĐĂNG KÝ: TINH GỌN, HIỆN ĐẠI & TẬP TRUNG */}
-        {!currentUser ? (
+        {/* Auth Centered Hero Card */}
+        <main className="app-container py-4 flex-grow-1">
           <div className="auth-page-wrapper">
             <div className="auth-card">
               {/* Mascot & Header */}
@@ -1451,11 +1299,256 @@ export default function App() {
               </div>
             </div>
           </div>
-        ) : (
-          /* ============================================================ */
-          /* NỘI DUNG HỌC TẬP: CHỈ DÀNH CHO HỌC VIÊN ĐÃ ĐĂNG NHẬP        */
-          /* ============================================================ */
-          <>
+        </main>
+      </div>
+    );
+  }
+
+  // 2. AUTHENTICATED WORKSPACE: Modern Duolingo Left Sidebar Navigation Layout
+  return (
+    <div className="app-shell">
+      {/* PWA Installation Instructions Modal */}
+      {showPwaBanner && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+          style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(6px)', zIndex: 9999 }}
+          onClick={() => setShowPwaBanner(false)}
+        >
+          <div
+            className="card border-0 rounded-4 shadow-lg p-4 bg-white"
+            style={{ maxWidth: '440px', width: '100%' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center mb-3">
+              <span style={{ fontSize: '3rem' }}>📲</span>
+              <h4 className="fw-bolder mt-2 mb-1">Cài đặt FreeEdu lên Điện Thoại</h4>
+              <p className="text-muted small">Dùng như một ứng dụng gốc (App Store / CH Play) với tốc độ tức thì và học ngoại tuyến!</p>
+            </div>
+
+            <div className="bg-light p-3 rounded-4 mb-3 small text-start">
+              <div className="fw-bold mb-2 text-dark">📱 Đối với iPhone / iPad (Safari):</div>
+              <ol className="mb-0 ps-3">
+                <li>Bấm vào biểu tượng <strong>Chia sẻ (Share) 📤</strong> ở thanh công cụ dưới cùng Safari.</li>
+                <li>Cuộn xuống và chọn <strong>"Thêm vào Màn hình chính" (Add to Home Screen) ➕</strong>.</li>
+                <li>Bấm <strong>"Thêm" (Add)</strong> ở góc trên bên phải.</li>
+              </ol>
+
+              <hr />
+
+              <div className="fw-bold mb-2 text-dark">🤖 Đối với Android (Chrome):</div>
+              <ol className="mb-0 ps-3">
+                <li>Bấm vào biểu tượng <strong>3 chấm dọc ⋮</strong> ở góc trên bên phải Chrome.</li>
+                <li>Chọn <strong>"Cài đặt ứng dụng"</strong> hoặc <strong>"Thêm vào Màn hình chính"</strong>.</li>
+              </ol>
+            </div>
+
+            <button className="btn btn-duo btn-duo-green w-100 py-2" onClick={() => setShowPwaBanner(false)}>
+              Đã hiểu, đóng hướng dẫn 👍
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 2.1 MODERN DUOLINGO LEFT SIDEBAR */}
+      <aside className="app-sidebar">
+        {/* Brand Logo */}
+        <div className="sidebar-brand" onClick={() => setActiveTab('roadmap')}>
+          <span className="sidebar-logo">🦉</span>
+          <div>
+            <div className="sidebar-brand-title">
+              Free<span style={{ color: '#10b981' }}>Edu</span>
+            </div>
+            <span className="sidebar-brand-sub">Học Tiếng Anh Chuẩn CEFR</span>
+          </div>
+        </div>
+
+        {/* Vertical Navigation Links */}
+        <nav className="sidebar-nav">
+          <button
+            className={`sidebar-nav-item ${activeTab === 'roadmap' ? 'active' : ''}`}
+            onClick={() => setActiveTab('roadmap')}
+          >
+            <span className="nav-icon">🗺️</span>
+            <span className="nav-label">Lộ Trình CEFR</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'flashcards' ? 'active' : ''}`}
+            onClick={() => setActiveTab('flashcards')}
+          >
+            <span className="nav-icon">🗂️</span>
+            <span className="nav-label">Thẻ 3D Có Ảnh</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'speech' ? 'active' : ''}`}
+            onClick={() => setActiveTab('speech')}
+          >
+            <span className="nav-icon">🎙️</span>
+            <span className="nav-label">Luyện Nói ELSA</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'ai_chat' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ai_chat')}
+          >
+            <span className="nav-icon">🤖</span>
+            <span className="nav-label">Trợ Lý AI Chat</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'spell' ? 'active' : ''}`}
+            onClick={() => setActiveTab('spell')}
+          >
+            <span className="nav-icon">🎧</span>
+            <span className="nav-label">Luyện Nghe (Ẩn chữ)</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'writing' ? 'active' : ''}`}
+            onClick={() => setActiveTab('writing')}
+          >
+            <span className="nav-icon">✍️</span>
+            <span className="nav-label">Viết Nhật Ký</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'match' ? 'active' : ''}`}
+            onClick={() => setActiveTab('match')}
+          >
+            <span className="nav-icon">🎮</span>
+            <span className="nav-label">Ghép Từ Nhanh</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'quiz' ? 'active' : ''}`}
+            onClick={() => setActiveTab('quiz')}
+          >
+            <span className="nav-icon">📝</span>
+            <span className="nav-label">Trắc Nghiệm</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'deck' ? 'active' : ''}`}
+            onClick={() => setActiveTab('deck')}
+          >
+            <span className="nav-icon">📚</span>
+            <span className="nav-label">Sổ Từ Vựng ({vocabulary.length})</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${activeTab === 'health' ? 'active' : ''}`}
+            onClick={() => setActiveTab('health')}
+          >
+            <span className="nav-icon">⚡</span>
+            <span className="nav-label">Trạng Thái Cloud</span>
+          </button>
+        </nav>
+
+        {/* Sidebar User Footer */}
+        <div className="sidebar-footer">
+          <div className="user-profile-box" title={currentUser.email}>
+            <div className="user-avatar-circle">
+              {currentUser.name ? currentUser.name.charAt(0).toUpperCase() : '👤'}
+            </div>
+            <div className="user-meta">
+              <div className="user-meta-name">{currentUser.name}</div>
+              <div className="user-meta-email">{currentUser.email}</div>
+            </div>
+          </div>
+          <button className="btn-sidebar-logout" onClick={handleLogout} title="Đăng xuất khỏi tài khoản">
+            <span>🚪</span>
+            <span>Đăng xuất</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* 2.2 RIGHT MAIN COLUMN */}
+      <div className="app-main-column">
+        {/* Main Topbar: Clean Gamification Stats Only */}
+        <header className="main-topbar">
+          {/* Mobile Logo (< 992px) */}
+          <div className="d-flex d-lg-none align-items-center gap-2 cursor-pointer" onClick={() => setActiveTab('roadmap')}>
+            <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>🦉</span>
+            <span className="fw-bolder fs-5 text-dark">
+              Free<span style={{ color: '#10b981' }}>Edu</span>
+            </span>
+          </div>
+
+          {/* Current Active Section Badge on Desktop */}
+          <div className="d-none d-lg-flex align-items-center gap-2 text-muted fw-bold small">
+            <span>📍 Khu vực:</span>
+            <span className="badge bg-light text-dark border px-2 py-1 rounded-pill">
+              {activeTab === 'roadmap' && '🗺️ Lộ Trình CEFR'}
+              {activeTab === 'flashcards' && '🗂️ Thẻ 3D Có Ảnh'}
+              {activeTab === 'speech' && '🎙️ Luyện Nói ELSA'}
+              {activeTab === 'ai_chat' && '🤖 Trợ Lý AI Chat'}
+              {activeTab === 'spell' && '🎧 Luyện Nghe (Ẩn chữ)'}
+              {activeTab === 'writing' && '✍️ Viết Nhật Ký'}
+              {activeTab === 'match' && '🎮 Ghép Từ Nhanh'}
+              {activeTab === 'quiz' && '📝 Trắc Nghiệm'}
+              {activeTab === 'deck' && `📚 Sổ Từ (${vocabulary.length})`}
+              {activeTab === 'health' && '⚡ Trạng Thái Cloud'}
+            </span>
+          </div>
+
+          {/* Gamification Stats Bar */}
+          <div className="d-flex align-items-center gap-2">
+            <div className="stat-chip stat-chip-streak" title="Chuỗi ngày học liên tục">
+              <span>🔥</span>
+              <span>{streak} ngày</span>
+            </div>
+
+            <div className="stat-chip stat-chip-xp" title="Điểm kinh nghiệm XP">
+              <span>⚡</span>
+              <span>{xp} XP</span>
+            </div>
+
+            <div className="stat-chip stat-chip-gems" title="Kim cương tích lũy">
+              <span>💎</span>
+              <span>{gems}</span>
+            </div>
+
+            <div className="stat-chip stat-chip-hearts" title="Số tim còn lại">
+              <span>❤️</span>
+              <span>{hearts}</span>
+            </div>
+
+            <button
+              className="btn btn-sm btn-outline-success rounded-pill px-2 py-1 text-nowrap d-none d-sm-inline-flex align-items-center gap-1"
+              onClick={() => setShowPwaBanner(true)}
+              style={{ fontSize: '0.75rem', fontWeight: 700 }}
+              title="Cài đặt App lên màn hình chính điện thoại iOS / Android"
+            >
+              <span>📲</span>
+              <span>Cài App</span>
+            </button>
+          </div>
+        </header>
+
+        {/* Daily Decay / Missed Day Alert Banner */}
+        {decayWarning && (
+          <div className="px-3 pt-3">
+            <div className="decay-alert-banner">
+              <div className="d-flex align-items-center gap-3">
+                <span className="fs-3">⚠️</span>
+                <div>
+                  <div className="fw-bold text-danger">Kỷ luật học tập & Trừ điểm kinh nghiệm:</div>
+                  <div className="small text-danger-emphasis">{decayWarning}</div>
+                </div>
+              </div>
+              <button
+                className="btn btn-sm btn-outline-danger rounded-pill px-3 fw-bold"
+                onClick={() => setDecayWarning(null)}
+              >
+                Đã hiểu ✕
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* 2.3 MAIN TAB CONTENT */}
+        <main className="p-3 p-md-4 flex-grow-1" style={{ maxWidth: '1100px', width: '100%', margin: '0 auto' }}>
             {/* TAB 0: ROADMAP (CƠ CHẾ LỘ TRÌNH DUOLINGO STYLE) */}
             {activeTab === 'roadmap' && (
               <div className="mx-auto" style={{ maxWidth: '680px' }}>
@@ -2590,9 +2683,36 @@ export default function App() {
                 </div>
               </div>
             )}
-          </>
-        )}
-      </main>
+        </main>
+
+        {/* Mobile Bottom Navigation Bar (< 992px) */}
+        <nav className="mobile-bottom-nav d-lg-none">
+          <button className={`mobile-nav-btn ${activeTab === 'roadmap' ? 'active' : ''}`} onClick={() => setActiveTab('roadmap')}>
+            <span>🗺️</span>
+            <span>Lộ trình</span>
+          </button>
+          <button className={`mobile-nav-btn ${activeTab === 'flashcards' ? 'active' : ''}`} onClick={() => setActiveTab('flashcards')}>
+            <span>🗂️</span>
+            <span>Thẻ 3D</span>
+          </button>
+          <button className={`mobile-nav-btn ${activeTab === 'speech' ? 'active' : ''}`} onClick={() => setActiveTab('speech')}>
+            <span>🎙️</span>
+            <span>Nói AI</span>
+          </button>
+          <button className={`mobile-nav-btn ${activeTab === 'ai_chat' ? 'active' : ''}`} onClick={() => setActiveTab('ai_chat')}>
+            <span>🤖</span>
+            <span>AI Chat</span>
+          </button>
+          <button className={`mobile-nav-btn ${activeTab === 'spell' ? 'active' : ''}`} onClick={() => setActiveTab('spell')}>
+            <span>🎧</span>
+            <span>Nghe</span>
+          </button>
+          <button className={`mobile-nav-btn ${activeTab === 'writing' ? 'active' : ''}`} onClick={() => setActiveTab('writing')}>
+            <span>✍️</span>
+            <span>Viết</span>
+          </button>
+        </nav>
+      </div>
     </div>
   );
 }
