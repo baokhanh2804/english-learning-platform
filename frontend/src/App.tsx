@@ -432,22 +432,10 @@ export default function App() {
   // Navigation tabs
   const [activeTab, setActiveTab] = useState<'roadmap' | 'flashcards' | 'speech' | 'ai_chat' | 'spell' | 'writing' | 'match' | 'quiz' | 'deck' | 'health'>('roadmap');
 
-  // Gamification state
-  const [streak, setStreak] = useState<number>(() => {
-    const saved = localStorage.getItem('user_streak');
-    return saved ? parseInt(saved, 10) : 3;
-  });
-
-  const [xp, setXp] = useState<number>(() => {
-    const saved = localStorage.getItem('user_xp');
-    return saved ? parseInt(saved, 10) : 210;
-  });
-
-  const [gems, setGems] = useState<number>(() => {
-    const saved = localStorage.getItem('user_gems');
-    return saved ? parseInt(saved, 10) : 110;
-  });
-
+  // Gamification state - Authentic values per user
+  const [streak, setStreak] = useState<number>(1);
+  const [xp, setXp] = useState<number>(0);
+  const [gems, setGems] = useState<number>(10);
   const [hearts] = useState<number>(5);
   const [decayWarning, setDecayWarning] = useState<string | null>(null);
 
@@ -541,17 +529,25 @@ export default function App() {
   const [showPwaBanner, setShowPwaBanner] = useState<boolean>(false);
 
   // Update XP helper
-  const addXp = (amount: number) => {
+  const addXp = (amount: number, targetUser?: AuthUser | null) => {
     setXp((prev) => {
       const next = prev + amount;
+      const u = targetUser !== undefined ? targetUser : currentUser;
+      if (u) {
+        localStorage.setItem(`user_${u.id || u.email}_xp`, next.toString());
+      }
       localStorage.setItem('user_xp', next.toString());
       return next;
     });
   };
 
-  const deductXp = (amount: number) => {
+  const deductXp = (amount: number, targetUser?: AuthUser | null) => {
     setXp((prev) => {
       const next = Math.max(0, prev - amount);
+      const u = targetUser !== undefined ? targetUser : currentUser;
+      if (u) {
+        localStorage.setItem(`user_${u.id || u.email}_xp`, next.toString());
+      }
       localStorage.setItem('user_xp', next.toString());
       return next;
     });
@@ -560,6 +556,26 @@ export default function App() {
   // Mount logic: PWA event, Daily decay, Auth check
   useEffect(() => {
     fetchBackendHealth();
+
+    // Stored auth verification & load user stats
+    const storedUserStr = localStorage.getItem('auth_user');
+    if (storedUserStr) {
+      try {
+        const u = JSON.parse(storedUserStr);
+        setCurrentUser(u);
+        const userKey = `user_${u.id || u.email}`;
+        const savedXp = localStorage.getItem(`${userKey}_xp`);
+        const savedStreak = localStorage.getItem(`${userKey}_streak`);
+        const savedGems = localStorage.getItem(`${userKey}_gems`);
+        setXp(savedXp !== null ? parseInt(savedXp, 10) : 50);
+        setStreak(savedStreak !== null ? parseInt(savedStreak, 10) : 1);
+        setGems(savedGems !== null ? parseInt(savedGems, 10) : 10);
+      } catch {}
+    } else {
+      setXp(0);
+      setStreak(1);
+      setGems(10);
+    }
 
     // Daily Decay check
     const lastActiveStr = localStorage.getItem('last_active_date');
@@ -581,15 +597,13 @@ export default function App() {
     }
     localStorage.setItem('last_active_date', todayStr);
 
-    // Stored auth verification
-    const storedUser = localStorage.getItem('auth_user');
-    if (storedUser) {
-      try {
-        setCurrentUser(JSON.parse(storedUser));
-      } catch {}
-    }
     getCurrentUser().then((user) => {
-      if (user) setCurrentUser(user);
+      if (user) {
+        setCurrentUser(user);
+        const userKey = `user_${user.id || user.email}`;
+        const savedXp = localStorage.getItem(`${userKey}_xp`);
+        if (savedXp !== null) setXp(parseInt(savedXp, 10));
+      }
     });
 
     getVocabulary()
@@ -1014,18 +1028,47 @@ export default function App() {
       if (authMode === 'login') {
         const res = await loginUser({ email: authForm.email, password: authForm.password });
         setCurrentUser(res.user);
+
+        // Load existing user stats or fallback to 50 XP starter
+        const userKey = `user_${res.user.id || res.user.email}`;
+        const savedXp = localStorage.getItem(`${userKey}_xp`);
+        const savedStreak = localStorage.getItem(`${userKey}_streak`);
+        const savedGems = localStorage.getItem(`${userKey}_gems`);
+
+        const currentXp = savedXp !== null ? parseInt(savedXp, 10) : 50;
+        const currentStreak = savedStreak !== null ? parseInt(savedStreak, 10) : 1;
+        const currentGems = savedGems !== null ? parseInt(savedGems, 10) : 10;
+
+        setXp(currentXp);
+        setStreak(currentStreak);
+        setGems(currentGems);
+        localStorage.setItem('user_xp', currentXp.toString());
+        localStorage.setItem('user_streak', currentStreak.toString());
+        localStorage.setItem('user_gems', currentGems.toString());
+
         setAuthSuccess('Đăng nhập thành công! Chúc bạn học tốt!');
         playSoundEffect('win');
-        addXp(30);
         setTimeout(() => {
           setAuthSuccess(null);
         }, 800);
       } else {
         const res = await registerUser({ name: authForm.name, email: authForm.email, password: authForm.password });
         setCurrentUser(res.user);
-        setAuthSuccess('Đăng ký tài khoản thành công! Tặng bạn +50 XP!');
+
+        // Brand new account starts fresh with EXACTLY 50 XP bonus, 1 day streak, 10 gems!
+        const userKey = `user_${res.user.id || res.user.email}`;
+        setXp(50);
+        setStreak(1);
+        setGems(10);
+        localStorage.setItem(`${userKey}_xp`, '50');
+        localStorage.setItem(`${userKey}_streak`, '1');
+        localStorage.setItem(`${userKey}_gems`, '10');
+        localStorage.setItem('user_xp', '50');
+        localStorage.setItem('user_streak', '1');
+        localStorage.setItem('user_gems', '10');
+
+        setAuthSuccess('Đăng ký tài khoản thành công! Tặng bạn +50 XP khởi đầu!');
         playSoundEffect('win');
-        addXp(50);
         setTimeout(() => {
           setAuthSuccess(null);
         }, 800);
@@ -1047,6 +1090,11 @@ export default function App() {
   const handleLogout = async () => {
     await logoutUser();
     setCurrentUser(null);
+    setXp(0);
+    setStreak(1);
+    setGems(10);
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
   };
 
   return (
@@ -1054,15 +1102,15 @@ export default function App() {
       {/* 1. TOP APP BAR - Duolingo Gamified Header */}
       <header className="app-topbar shadow-sm">
         <div className="app-container d-flex align-items-center justify-content-between">
-          {/* Logo & Mascot */}
-          <div className="d-flex align-items-center gap-2 cursor-pointer" onClick={() => setActiveTab('roadmap')}>
-            <span style={{ fontSize: '2rem' }}>🦉</span>
+          {/* Logo & Brand Slogan */}
+          <div className="d-flex align-items-center gap-2 cursor-pointer text-nowrap" onClick={() => setActiveTab('roadmap')}>
+            <span style={{ fontSize: '2.2rem', lineHeight: 1 }}>🦉</span>
             <div>
-              <div className="fw-bolder fs-5 text-dark" style={{ letterSpacing: '-0.5px' }}>
+              <div className="fw-bolder fs-5 text-dark lh-1" style={{ letterSpacing: '-0.5px' }}>
                 Free<span style={{ color: '#10b981' }}>Edu</span>
               </div>
-              <small className="text-muted d-none d-sm-inline" style={{ fontSize: '0.75rem' }}>
-                CEFR Lộ Trình • ELSA Nói • AI Tutor
+              <small className="text-muted text-nowrap d-none d-md-inline" style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                Học Tiếng Anh CEFR • AI Tutor
               </small>
             </div>
           </div>
@@ -1101,29 +1149,19 @@ export default function App() {
                 <span>Cài App</span>
               </button>
 
-              {/* Test Simulation Button: Simulate missed day & decay */}
-              <button
-                className="btn btn-sm btn-outline-warning rounded-pill px-2 py-1 text-nowrap d-none d-lg-inline-block"
-                onClick={handleSimulateMissedDay}
-                title="Bấm để thử nghiệm cơ chế trừ 20 XP khi quên online học bài"
-                style={{ fontSize: '0.75rem', fontWeight: 700 }}
-              >
-                ⏳ Thử trừ 20 XP
-              </button>
-
-              {/* User Profile / Logout Button */}
+              {/* User Profile / Logout Button (No Dev Test Button in Header!) */}
               <div className="d-flex align-items-center gap-2 ms-1">
                 <div className="stat-chip bg-light text-dark border px-2 py-1" title={currentUser.email}>
                   <span>👤</span>
-                  <span className="fw-bold text-truncate" style={{ maxWidth: '100px' }}>
+                  <span className="fw-bold text-truncate" style={{ maxWidth: '140px' }}>
                     {currentUser.name}
                   </span>
                 </div>
                 <button
-                  className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                  className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"
                   onClick={handleLogout}
                   title="Đăng xuất khỏi tài khoản"
-                  style={{ fontSize: '0.75rem', fontWeight: 700 }}
+                  style={{ fontSize: '0.8rem', fontWeight: 700 }}
                 >
                   Thoát
                 </button>
@@ -1214,8 +1252,8 @@ export default function App() {
 
       {/* 2. MODE SELECTOR TABS (Chỉ hiển thị khi đã đăng nhập) */}
       {currentUser && (
-        <div className="bg-white border-bottom py-2">
-          <div className="app-container d-flex gap-2 overflow-auto py-1">
+        <div className="bg-white border-bottom shadow-sm">
+          <div className="app-container app-nav-bar-container">
             <button
               className={`app-nav-pill ${activeTab === 'roadmap' ? 'active' : ''}`}
               onClick={() => setActiveTab('roadmap')}
@@ -2536,6 +2574,18 @@ export default function App() {
                     disabled={healthLoading}
                   >
                     Kiểm tra lại kết nối 🔄
+                  </button>
+                </div>
+
+                {/* Developer / Administrative Simulator Card */}
+                <div className="card border-0 shadow-sm rounded-4 p-4 bg-white text-start mt-3">
+                  <h6 className="fw-bold text-dark mb-1">🧪 Giả lập Kỷ luật học tập & Trừ điểm (Dev Simulator)</h6>
+                  <p className="text-muted small mb-3">Công cụ thử nghiệm tính năng tự động trừ 20 XP và bẻ gãy chuỗi Streak khi học viên không online học bài.</p>
+                  <button
+                    className="btn btn-sm btn-outline-warning rounded-pill px-3 py-2 fw-bold w-100"
+                    onClick={handleSimulateMissedDay}
+                  >
+                    ⏳ Giả lập bỏ lỡ 1 ngày: Trừ 20 XP & Reset Streak
                   </button>
                 </div>
               </div>
